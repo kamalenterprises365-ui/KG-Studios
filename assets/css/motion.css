@@ -29,7 +29,7 @@
 @keyframes vtIn { from { opacity: 0; transform: translateY(16px); } }
 
 /* Scroll scene: chaos to clarity. motion.js sets --p on .scene. */
-.scene { position: relative; height: 240vh; --p: 0; }
+.scene { position: relative; height: 190vh; --p: 0; }
 .scene__stick { position: sticky; top: 0; height: 100svh; display: flex; flex-direction: column; justify-content: center; gap: 2.5rem; padding: 4rem var(--m) 1rem; overflow: hidden; }
 .scene__copy { position: relative; z-index: 3; display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1rem 3rem; }
 .scene__copy .soft { max-width: 26rem; margin: 0; }
