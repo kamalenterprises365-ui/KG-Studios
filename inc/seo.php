@@ -131,3 +131,29 @@ add_action( 'template_redirect', function () {
 add_filter( 'wp_sitemaps_add_provider', function ( $provider, $name ) {
 	return 'users' === $name ? false : $provider;
 }, 10, 2 );
+
+/**
+ * The thank-you page is a conversion marker, not content: keep it out of every sitemap and out of the
+ * index, whether Yoast or the core sitemap is running.
+ */
+function kg_thankyou_id() {
+	$page = get_page_by_path( 'contact/thank-you' );
+	return $page ? (int) $page->ID : 0;
+}
+
+add_filter( 'wpseo_exclude_from_sitemap_by_post_ids', function ( $ids ) {
+	$id = kg_thankyou_id();
+	return $id ? array_merge( (array) $ids, array( $id ) ) : $ids;
+} );
+
+add_filter( 'wp_sitemaps_posts_query_args', function ( $args, $post_type ) {
+	$id = kg_thankyou_id();
+	if ( 'page' === $post_type && $id ) {
+		$args['post__not_in'] = array_merge( isset( $args['post__not_in'] ) ? (array) $args['post__not_in'] : array(), array( $id ) );
+	}
+	return $args;
+}, 10, 2 );
+
+add_filter( 'wpseo_robots', function ( $robots ) {
+	return 'thank-you' === kg_current_slug() ? 'noindex, nofollow' : $robots;
+} );
