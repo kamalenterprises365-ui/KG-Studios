@@ -30,13 +30,14 @@
 
 	/* Scroll scene: slides drift in 3D, then snap into place. Drives --p from 0 to 1. */
 	const scene = $('[data-scene]');
-	if (scene && !reduce) {
+	if (scene && !reduce && matchMedia('(min-width: 901px)').matches) {
 		const update = raf(() => {
 			const r = scene.getBoundingClientRect();
 			const span = r.height - innerHeight;
 			const raw = span > 0 ? Math.min(Math.max(-r.top / span, 0), 1) : 1;
 			const p = Math.min(raw / 0.8, 1);
 			scene.style.setProperty('--p', (1 - Math.pow(1 - p, 3)).toFixed(4));
+			scene.dataset.state = p < 0.5 ? 'a' : 'b';
 		});
 		addEventListener('scroll', update, { passive: true });
 		addEventListener('resize', update);
@@ -69,22 +70,33 @@
 		root.addEventListener('mouseleave', () => cur.classList.remove('is-on'));
 	}
 
-	/* Slide counter (home page) */
-	const hud = $('.hud');
-	const slides = $$('[data-slide]');
-	if (hud && slides.length && 'IntersectionObserver' in window) {
-		const pad = (n) => String(n).padStart(2, '0');
-		const n = $('[data-hud-n]', hud), l = $('[data-hud-l]', hud);
-		$('[data-hud-t]', hud).textContent = pad(slides.length);
-		const io = new IntersectionObserver((entries) => {
-			entries.forEach((en) => {
-				if (!en.isIntersecting) return;
-				n.textContent = pad(slides.indexOf(en.target) + 1);
-				l.textContent = en.target.dataset.slide;
-			});
-		}, { rootMargin: '-45% 0px -50% 0px' });
-		slides.forEach((s) => io.observe(s));
+	/* Header takes the ink of the chapter beneath it */
+	const header = $('[data-header]');
+	if (header) {
+		const FIELDS = '.f-ink, .f-paper, .f-gold, .f-teal';
+		const sync = raf(() => {
+			const under = document.elementsFromPoint(innerWidth / 2, 36).find((el) => !header.contains(el) && el.closest(FIELDS));
+			const field = under && under.closest(FIELDS);
+			header.dataset.ink = field && field.classList.contains('f-ink') ? 'dark' : 'light';
+		});
+		addEventListener('scroll', sync, { passive: true });
+		addEventListener('resize', sync);
+		sync();
 	}
+
+	/* Services index: hover, focus or tap a name to swap the sheet beside it */
+	$$('[data-index]').forEach((box) => {
+		const links = $$('[data-idx]', box);
+		const panels = $$('[data-panel]', box);
+		const show = (i) => {
+			links.forEach((l, k) => l.classList.toggle('is-on', k === i));
+			panels.forEach((p, k) => p.classList.toggle('is-on', k === i));
+		};
+		links.forEach((l, i) => {
+			l.addEventListener('mouseenter', () => show(i));
+			l.addEventListener('focus', () => show(i));
+		});
+	});
 
 	/* Fix this slide */
 	$$('[data-game]').forEach((stage) => {

@@ -1,38 +1,40 @@
 <?php
 /**
- * Home services: the three pillars as large linked cards, then the presentation offer list.
+ * Home services as an index: the nine presentation services listed by name; hovering, focusing
+ * or tapping one swaps the sheet beside it. Every name is a real link, so it works without JS.
+ * Below, the three service pillars as large text links.
  */
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 $all     = kg_pages();
+$items   = $all['presentation-design']['children'];
 $pillars = array( 'presentation-design', 'brand-identity', 'digital-design' );
 ?>
-<section class="section" id="what_we_do" data-slide="<?php esc_attr_e( 'What we do', 'kgstudios' ); ?>">
+<section class="section f-teal" id="what_we_do">
 	<div class="wrap">
-		<header class="section__head" data-reveal="up">
-			<p class="eyebrow"><?php esc_html_e( 'What We Do', 'kgstudios' ); ?></p>
-			<h2><?php esc_html_e( 'Three things, done exceptionally well', 'kgstudios' ); ?></h2>
-			<p class="muted"><?php esc_html_e( 'Where ideas rise, flow, dive, and shine – through powerful presentations.', 'kgstudios' ); ?></p>
-		</header>
+		<h2 data-reveal="up"><?php esc_html_e( 'Presentation Services', 'kgstudios' ); ?></h2>
+		<p class="statement" data-reveal="up" style="--d:.06s"><?php esc_html_e( 'Where ideas rise, flow, dive, and shine – through powerful presentations.', 'kgstudios' ); ?></p>
 
-		<div class="pillars">
-			<?php foreach ( $pillars as $i => $slug ) : $c = $all[ $slug ]; ?>
-				<a class="pillar tilt" href="<?php echo esc_url( kg_slug_url( $slug ) ); ?>" data-reveal="up" data-cursor="<?php esc_attr_e( 'Explore', 'kgstudios' ); ?>" style="--d:<?php echo esc_attr( $i * 0.1 ); ?>s">
-					<img src="<?php echo kg_img( $c['image'] ); ?>" alt="" loading="lazy" width="900" height="600">
-					<span class="pillar__n"><?php echo esc_html( sprintf( '%02d', $i + 1 ) ); ?></span>
-					<span class="pillar__body">
-						<h3><?php echo esc_html( $c['title'] ); ?></h3>
-						<span><?php echo esc_html( $c['short'] ); ?></span>
-					</span>
-				</a>
-			<?php endforeach; ?>
+		<div class="idx" data-index data-reveal="up">
+			<ul class="idx__list">
+				<?php foreach ( $items as $i => $slug ) : ?>
+					<li><a class="<?php echo 0 === $i ? 'is-on' : ''; ?>" href="<?php echo esc_url( kg_slug_url( $slug ) ); ?>" data-idx="<?php echo (int) $i; ?>"><?php echo esc_html( $all[ $slug ]['title'] ); ?></a></li>
+				<?php endforeach; ?>
+			</ul>
+			<div class="idx__stage">
+				<?php foreach ( $items as $i => $slug ) : $c = $all[ $slug ]; ?>
+					<div class="idx__panel<?php echo 0 === $i ? ' is-on' : ''; ?>" data-panel="<?php echo (int) $i; ?>">
+						<img src="<?php echo kg_img( $c['image'] ); ?>" alt="<?php echo esc_attr( $c['title'] ); ?>" loading="lazy" width="900" height="600">
+						<p><?php echo esc_html( $c['short'] ); ?></p>
+					</div>
+				<?php endforeach; ?>
+			</div>
 		</div>
 
-		<h3 class="mini center" data-reveal="up"><?php esc_html_e( 'Presentation services', 'kgstudios' ); ?></h3>
-		<ul class="pills" data-reveal="up">
-			<?php foreach ( $all['presentation-design']['children'] as $child ) : ?>
-				<li><a href="<?php echo esc_url( kg_slug_url( $child ) ); ?>"><?php echo esc_html( $all[ $child ]['title'] ); ?></a></li>
+		<ul class="rows" id="services" data-reveal="up">
+			<?php foreach ( $pillars as $slug ) : $c = $all[ $slug ]; ?>
+				<li><a href="<?php echo esc_url( kg_slug_url( $slug ) ); ?>" data-cursor="<?php esc_attr_e( 'Open', 'kgstudios' ); ?>"><span class="rows__t"><?php echo esc_html( $c['title'] ); ?></span><span class="rows__d"><?php echo esc_html( $c['short'] ); ?></span></a></li>
 			<?php endforeach; ?>
 		</ul>
 	</div>

@@ -4,17 +4,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 $items = kg_content( 'testimonials' );
 ?>
-<section class="section section--alt">
+<section class="section f-teal">
 	<div class="wrap">
-		<header class="section__head" data-reveal="up">
-			<p class="eyebrow"><?php esc_html_e( 'Testimonials', 'kgstudios' ); ?></p>
-			<h2><?php esc_html_e( 'What People Say', 'kgstudios' ); ?></h2>
-		</header>
+		<h2 data-reveal="up"><?php esc_html_e( 'What People Say', 'kgstudios' ); ?></h2>
 		<div class="slider" data-slider data-reveal="up">
 			<div class="slider__track">
 				<?php foreach ( $items as $t ) : ?>
 					<figure class="quote">
-						<blockquote>&ldquo;<?php echo esc_html( $t[2] ); ?>&rdquo;</blockquote>
+						<blockquote><p>&ldquo;<?php echo esc_html( $t[2] ); ?>&rdquo;</p></blockquote>
 						<figcaption><b><?php echo esc_html( $t[0] ); ?></b><span><?php echo esc_html( $t[1] ); ?></span></figcaption>
 					</figure>
 				<?php endforeach; ?>

@@ -9,11 +9,10 @@ get_header();
 $thanks  = get_page_by_path( 'contact/thank-you' );
 $exclude = $thanks ? (string) $thanks->ID : '';
 get_template_part( 'template-parts/page', 'hero', array(
-	'eyebrow' => __( 'Sitemap', 'kgstudios' ),
 	'title'   => __( 'Every page, <span class="gold">one list</span>', 'kgstudios' ),
 ) );
 ?>
-<section class="section">
+<section class="section f-paper">
 	<div class="wrap prose sitemap">
 		<h2><?php esc_html_e( 'Pages', 'kgstudios' ); ?></h2>
 		<ul><?php wp_list_pages( array( 'title_li' => '', 'exclude' => $exclude ) ); ?></ul>

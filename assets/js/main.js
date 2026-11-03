@@ -15,8 +15,7 @@
 		const max = document.documentElement.scrollHeight - innerHeight;
 		if (bar) bar.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
 		if (header) {
-			header.classList.toggle('is-stuck', y > 20);
-			const open = $('.nav.is-open');
+						const open = $('.nav.is-open');
 			header.classList.toggle('is-hidden', y > lastY && y > 400 && !open);
 		}
 		lastY = y;
@@ -31,6 +30,7 @@
 	if (burger && nav) {
 		const set = (open) => {
 			nav.classList.toggle('is-open', open);
+			if (header) header.classList.toggle('is-open', open);
 			burger.setAttribute('aria-expanded', String(open));
 			document.body.style.overflow = open ? 'hidden' : '';
 		};

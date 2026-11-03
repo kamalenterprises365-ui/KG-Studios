@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <head>
 <meta charset="<?php bloginfo( 'charset' ); ?>">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0a0c10">
+<meta name="theme-color" content="#d8a53e">
 <link rel="icon" href="<?php echo kg_img( 'favicon.png' ); ?>">
 <script>
 (function (d) {
@@ -23,16 +23,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 <a class="skip" href="#main"><?php esc_html_e( 'Skip to content', 'kgstudios' ); ?></a>
-<div class="progress" aria-hidden="true"><i></i></div>
 <div class="curtain" aria-hidden="true"><img src="<?php echo kg_img( 'logo.svg' ); ?>" alt="" width="160" height="50"></div>
 <div class="cursor" aria-hidden="true"><span></span></div>
 
-<header class="site-header" data-header>
-	<div class="wrap site-header__in">
+<header class="site-header" data-header data-ink="light">
+	<div class="site-header__in">
 		<a class="brand" href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="<?php bloginfo( 'name' ); ?>">
-			<?php if ( has_custom_logo() ) : the_custom_logo(); else : ?>
-				<img src="<?php echo kg_img( 'logo.svg' ); ?>" alt="<?php bloginfo( 'name' ); ?>" width="120" height="38">
-			<?php endif; ?>
+			<?php if ( has_custom_logo() ) { the_custom_logo(); } else { echo kg_logo(); } ?>
 		</a>
 
 		<nav class="nav" id="nav" aria-label="<?php esc_attr_e( 'Primary', 'kgstudios' ); ?>">
@@ -45,7 +42,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				'depth'          => 2,
 			) );
 			?>
-			<a class="btn btn--gold nav__cta" href="<?php echo esc_url( kg_page_url( 'contact' ) ); ?>"><?php esc_html_e( 'Get a quote', 'kgstudios' ); ?></a>
+			<a class="btn nav__cta" href="<?php echo esc_url( kg_page_url( 'contact' ) ); ?>"><?php esc_html_e( 'Get a quote', 'kgstudios' ); ?></a>
 		</nav>
 
 		<button class="burger" type="button" aria-controls="nav" aria-expanded="false" aria-label="<?php esc_attr_e( 'Menu', 'kgstudios' ); ?>"><span></span><span></span></button>

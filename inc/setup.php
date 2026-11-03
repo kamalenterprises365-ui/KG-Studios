@@ -21,7 +21,7 @@ add_action( 'after_setup_theme', function () {
 add_action( 'wp_enqueue_scripts', function () {
 	wp_enqueue_style(
 		'kg-fonts',
-		'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Montserrat:wght@500;600;700;800&display=swap',
+		'https://fonts.googleapis.com/css2?family=League+Spartan:wght@700&family=Figtree:wght@400;600&display=swap',
 		array(),
 		null
 	);
@@ -48,6 +48,24 @@ add_filter( 'wp_resource_hints', function ( $urls, $relation ) {
 /** Theme image URL helper. */
 function kg_img( $file ) {
 	return esc_url( get_template_directory_uri() . '/assets/img/' . $file );
+}
+
+/**
+ * Inline logo that takes the ink of whatever field it sits on (the file itself is white).
+ * The gold part shows only where --logo-accent is set, i.e. on dark fields.
+ */
+function kg_logo( $class = '' ) {
+	static $svg = null;
+	if ( null === $svg ) {
+		$raw = (string) file_get_contents( get_template_directory() . '/assets/img/logo.svg' );
+		$raw = preg_replace( '/\s(?:id|data-name|width|height)="[^"]*"/', '', $raw );
+		$svg = str_replace(
+			array( '.cls-1 { fill: #fff; }', '.cls-2 { fill: #d8a53e; }' ),
+			array( '.kg-logo .cls-1 { fill: currentColor; }', '.kg-logo .cls-2 { fill: var(--logo-accent, currentColor); }' ),
+			$raw
+		);
+	}
+	return str_replace( '<svg ', '<svg class="kg-logo ' . esc_attr( $class ) . '" role="img" aria-label="KG Studios" ', $svg );
 }
 
 function kg_defaults() {

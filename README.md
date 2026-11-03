@@ -2,6 +2,8 @@
 
 Custom theme for [kgstudios.io](https://kgstudios.io/). No page builder, no plugins required, no JS libraries.
 
+**Design: colour chapters.** Every section is a full-bleed field in one flat brand colour (gold, ink, paper, teal), like slides in a deck. League Spartan + Figtree, square corners, no rules, gradients or resting shadows. Field classes: `f-gold`, `f-ink`, `f-paper`, `f-teal`; components read the roles those set (`--bg --fg --soft --tile --accent --on`), so neighbouring sections should always use different fields.
+
 ## Install
 Repo root is the theme folder. Install it (zip, or WP Pusher) as `wp-content/themes/KG-Studios`, then activate. Test on staging first.
 

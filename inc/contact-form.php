@@ -136,7 +136,7 @@ function kg_lead_form( $id = 'lead' ) {
 					<label class="chip"><input type="radio" name="kg_type" value="<?php echo esc_attr( $t ); ?>" <?php checked( 0, $i ); ?>><span><?php echo esc_html( $t ); ?></span></label>
 				<?php endforeach; ?>
 			</div>
-			<button type="button" class="btn btn--gold" data-next><?php esc_html_e( 'Next', 'kgstudios' ); ?></button>
+			<button type="button" class="btn" data-next><?php esc_html_e( 'Next', 'kgstudios' ); ?></button>
 		</fieldset>
 
 		<fieldset class="lead__step" data-step="2">
@@ -148,7 +148,7 @@ function kg_lead_form( $id = 'lead' ) {
 			</div>
 			<div class="lead__nav">
 				<button type="button" class="btn btn--ghost" data-prev><?php esc_html_e( 'Back', 'kgstudios' ); ?></button>
-				<button type="button" class="btn btn--gold" data-next><?php esc_html_e( 'Next', 'kgstudios' ); ?></button>
+				<button type="button" class="btn" data-next><?php esc_html_e( 'Next', 'kgstudios' ); ?></button>
 			</div>
 		</fieldset>
 
@@ -164,7 +164,7 @@ function kg_lead_form( $id = 'lead' ) {
 			<label class="field"><span><?php esc_html_e( 'Link to your files (Drive, Dropbox, WeTransfer) – optional', 'kgstudios' ); ?></span><input type="url" name="kg_link" placeholder="https://" autocomplete="off"></label>
 			<div class="lead__nav">
 				<button type="button" class="btn btn--ghost" data-prev><?php esc_html_e( 'Back', 'kgstudios' ); ?></button>
-				<button type="submit" class="btn btn--gold"><?php esc_html_e( "Let's Talk", 'kgstudios' ); ?></button>
+				<button type="submit" class="btn"><?php esc_html_e( "Let's Talk", 'kgstudios' ); ?></button>
 			</div>
 		</fieldset>
 	</form>

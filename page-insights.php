@@ -7,13 +7,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 get_header();
 get_template_part( 'template-parts/page', 'hero', array(
-	'eyebrow' => __( 'Insights', 'kgstudios' ),
 	'title'   => __( 'Ideas on presentations, <span class="gold">story and brand</span>', 'kgstudios' ),
 ) );
 $paged = max( 1, (int) get_query_var( 'paged' ), (int) get_query_var( 'page' ) );
 $posts = new WP_Query( array( 'post_type' => 'post', 'paged' => $paged, 'posts_per_page' => 9 ) );
 ?>
-<section class="section">
+<section class="section f-paper">
 	<div class="wrap">
 		<?php get_template_part( 'template-parts/post-cards', null, array( 'query' => $posts ) ); ?>
 		<div class="pager">

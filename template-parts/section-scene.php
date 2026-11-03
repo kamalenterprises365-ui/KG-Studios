@@ -18,15 +18,11 @@ $chaos = array(
 );
 $pairs = kg_content( 'pairs' );
 ?>
-<section class="scene" data-scene data-slide="<?php esc_attr_e( 'Before and after', 'kgstudios' ); ?>" aria-label="<?php esc_attr_e( 'Cluttered slides become clear', 'kgstudios' ); ?>">
+<section class="scene f-paper" data-scene aria-label="<?php esc_attr_e( 'Cluttered slides become clear', 'kgstudios' ); ?>">
 	<div class="scene__stick">
 		<div class="scene__copy">
-			<p class="eyebrow"><?php esc_html_e( 'The KG Studios Effect', 'kgstudios' ); ?></p>
-			<div class="scene__heads">
-				<h2 class="scene__h scene__h--a"><?php esc_html_e( 'Cluttered, inconsistent slides', 'kgstudios' ); ?></h2>
-				<h2 class="scene__h scene__h--b"><?php echo wp_kses_post( __( '<span class="gold">Sharp, on-brand,</span> high-impact', 'kgstudios' ) ); ?></h2>
-			</div>
-			<p class="muted"><?php esc_html_e( 'We turn cluttered, inconsistent slides into sharp, on-brand, high-impact presentations built to drive decisions.', 'kgstudios' ); ?></p>
+			<h2 class="scene__h"><span class="scene__a"><?php esc_html_e( 'Cluttered, inconsistent slides', 'kgstudios' ); ?></span><span class="scene__b"><?php esc_html_e( 'Sharp, on-brand, high-impact', 'kgstudios' ); ?></span></h2>
+			<p class="soft"><?php esc_html_e( 'We turn cluttered, inconsistent slides into sharp, on-brand, high-impact presentations built to drive decisions.', 'kgstudios' ); ?></p>
 		</div>
 		<div class="scene__stage" aria-hidden="true">
 			<?php foreach ( $pairs as $i => $n ) : $c = $chaos[ $i ]; ?>

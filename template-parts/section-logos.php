@@ -1,10 +1,14 @@
 <?php
+/**
+ * Client logo strip. Args: field (paper|ink|gold|teal).
+ */
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+$a       = wp_parse_args( $args, array( 'field' => 'paper' ) );
 $clients = kg_content( 'clients' );
 ?>
-<section class="logos" aria-label="<?php esc_attr_e( 'Clients', 'kgstudios' ); ?>">
+<section class="logos f-<?php echo esc_attr( $a['field'] ); ?>" aria-label="<?php esc_attr_e( 'Clients', 'kgstudios' ); ?>">
 	<p class="logos__title" data-reveal><?php esc_html_e( 'Trusted by ambitious brands across India & the Middle East', 'kgstudios' ); ?></p>
 	<div class="marquee">
 		<div class="marquee__track">

@@ -1,16 +1,18 @@
 <?php
+/**
+ * Contact block with the lead form. Args: field (default gold).
+ */
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+$a  = wp_parse_args( $args, array( 'field' => 'gold' ) );
 $wa = preg_replace( '/\D/', '', (string) kg_opt( 'whatsapp' ) );
 ?>
-<section class="section cta" id="contact-us" data-slide="<?php esc_attr_e( 'Contact', 'kgstudios' ); ?>">
-	<div class="orb orb--gold" data-parallax="0.12"></div>
+<section class="section cta f-<?php echo esc_attr( $a['field'] ); ?>" id="contact-us">
 	<div class="wrap cta__grid">
 		<div data-reveal="left">
-			<p class="eyebrow"><?php esc_html_e( 'Contact Us', 'kgstudios' ); ?></p>
 			<h2><?php esc_html_e( "Let's Work Together", 'kgstudios' ); ?></h2>
-			<p class="muted"><?php esc_html_e( "Tell us who you are and what you need – we'll do the rest.", 'kgstudios' ); ?></p>
+			<p class="statement"><?php esc_html_e( "Tell us who you are and what you need – we'll do the rest.", 'kgstudios' ); ?></p>
 			<ul class="contact-list">
 				<li><span><?php esc_html_e( 'Email', 'kgstudios' ); ?></span><a href="mailto:<?php echo esc_attr( kg_opt( 'email' ) ); ?>"><?php echo esc_html( kg_opt( 'email' ) ); ?></a></li>
 				<?php if ( kg_opt( 'phone' ) ) : ?>

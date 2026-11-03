@@ -1,22 +1,19 @@
 <?php
 /**
- * The five-step process, on a light "paper" section.
+ * The five steps as one bar: five flat colour segments, a clause under each. Order is shown by position.
  */
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+$tone = array( 'gold', 'teal', 'paper', 'gold', 'teal' );
 ?>
-<section class="section section--paper" id="process" data-slide="<?php esc_attr_e( 'Process', 'kgstudios' ); ?>">
+<section class="section f-ink" id="process">
 	<div class="wrap">
-		<header class="section__head" data-reveal="up">
-			<p class="eyebrow"><?php esc_html_e( 'How we work', 'kgstudios' ); ?></p>
-			<h2><?php esc_html_e( 'From brief to a deck you are proud to present', 'kgstudios' ); ?></h2>
-		</header>
-		<ol class="steps">
+		<h2 data-reveal="up"><?php esc_html_e( 'How we work', 'kgstudios' ); ?></h2>
+		<ol class="bar" data-reveal="up">
 			<?php foreach ( kg_process() as $i => $s ) : ?>
-				<li class="step" data-reveal="up" style="--d:<?php echo esc_attr( $i * 0.08 ); ?>s">
-					<span class="step__n"><?php echo esc_html( sprintf( '%02d', $i + 1 ) ); ?></span>
-					<h3><?php echo esc_html( $s[0] ); ?></h3>
+				<li class="bar__seg">
+					<span class="bar__block bar__block--<?php echo esc_attr( $tone[ $i ] ); ?>"><?php echo esc_html( $s[0] ); ?></span>
 					<p><?php echo esc_html( $s[1] ); ?></p>
 				</li>
 			<?php endforeach; ?>

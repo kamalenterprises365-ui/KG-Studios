@@ -17,7 +17,7 @@ if ( is_search() ) {
 }
 get_template_part( 'template-parts/page', 'hero', array( 'title' => esc_html( $title ) ) );
 ?>
-<section class="section">
+<section class="section f-paper">
 	<div class="wrap">
 		<?php get_template_part( 'template-parts/post-cards' ); ?>
 		<div class="pager"><?php the_posts_pagination( array( 'mid_size' => 1 ) ); ?></div>

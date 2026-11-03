@@ -6,11 +6,10 @@ get_header();
 while ( have_posts() ) :
 	the_post();
 	get_template_part( 'template-parts/page', 'hero', array(
-		'eyebrow' => get_the_date(),
 		'title'   => get_the_title(),
 	) );
 	?>
-	<article <?php post_class( 'section' ); ?>>
+	<article <?php post_class( 'section f-paper' ); ?>>
 		<div class="wrap prose">
 			<?php if ( has_post_thumbnail() ) { the_post_thumbnail( 'large' ); } ?>
 			<?php the_content(); ?>

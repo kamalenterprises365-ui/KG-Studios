@@ -16,7 +16,7 @@ while ( have_posts() ) :
 	}
 	get_template_part( 'template-parts/page', 'hero', array( 'title' => get_the_title() ) );
 	?>
-	<section class="section">
+	<section class="section f-paper">
 		<div class="wrap prose"><?php the_content(); ?></div>
 	</section>
 	<?php

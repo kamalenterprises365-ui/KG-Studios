@@ -11,12 +11,11 @@ while ( have_posts() ) :
 	$before = get_post_meta( $id, 'kg_before', true );
 	$after  = get_post_meta( $id, 'kg_after', true );
 	get_template_part( 'template-parts/page', 'hero', array(
-		'eyebrow' => trim( $client . ( $client && get_post_meta( $id, 'kg_service', true ) ? ' · ' : '' ) . get_post_meta( $id, 'kg_service', true ) ),
 		'title'   => get_the_title(),
 		'lead'    => $result,
 	) );
 	?>
-	<section class="section">
+	<section class="section f-paper">
 		<div class="wrap">
 			<?php if ( $before && $after ) : ?>
 				<div class="case-ba"><?php kg_ba_figure( $before, $after ); ?></div>
