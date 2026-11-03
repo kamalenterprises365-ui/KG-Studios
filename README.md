@@ -5,7 +5,7 @@ Custom theme for [kgstudios.io](https://kgstudios.io/). No page builder or plugi
 ## Install
 Repo root is the theme folder. Zip it (or connect it via your GitHub integration) into `wp-content/themes/kg-studios`, then activate.
 
-On activation the theme creates Home, Services, Our Work, About and Contact pages (if missing), sets Home as the static front page (if no static page is set), and builds a primary menu.
+On activation the theme creates Home, Services, Our Work, About and Contact pages (if missing) and builds a primary menu. The home page is always `front-page.php`.
 
 ## Structure
 - `front-page.php`, `page-services.php`, `page-work.php`, `page-about.php`, `page-contact.php`: page templates, picked by page slug.
@@ -18,5 +18,6 @@ On activation the theme creates Home, Services, Our Work, About and Contact page
 Appearance → Customize → *KG Studios contact & social*: email, phone, address, Facebook / Instagram / LinkedIn URLs.
 
 ## Notes
-- Form mail uses `wp_mail()`. Install an SMTP plugin for reliable delivery.
+- Every enquiry is saved under **Leads** in the admin and emailed with `wp_mail()`. Install an SMTP plugin for reliable delivery.
+- Test the form handler on staging: `wp eval-file wp-content/themes/KG-Studios/tests/contact-form.php`.
 - Animations respect `prefers-reduced-motion`.

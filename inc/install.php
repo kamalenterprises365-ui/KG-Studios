@@ -31,11 +31,6 @@ add_action( 'after_switch_theme', function () {
 		) );
 	}
 
-	if ( ! empty( $ids['home'] ) && 'page' !== get_option( 'show_on_front' ) ) {
-		update_option( 'show_on_front', 'page' );
-		update_option( 'page_on_front', $ids['home'] );
-	}
-
 	$locations = get_theme_mod( 'nav_menu_locations', array() );
 	if ( ! empty( $locations['primary'] ) ) {
 		return;

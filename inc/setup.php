@@ -77,12 +77,6 @@ function kg_fallback_menu() {
 	echo '</ul>';
 }
 
-/** Add a body class that tells CSS whether the header sits over a dark hero. */
-add_filter( 'body_class', function ( $classes ) {
-	$classes[] = 'kg-dark';
-	return $classes;
-} );
-
 /** Remove emoji scripts; unused and render-blocking-adjacent. */
 remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
 remove_action( 'wp_print_styles', 'print_emoji_styles' );

@@ -4,66 +4,96 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Lead form: posts to admin-post.php, emails the site's contact address.
- * Protected by a nonce, a honeypot, and a per-IP throttle.
+ * Lead form: posts to admin-post.php, saves the enquiry as a private "Lead" post
+ * (so nothing is lost if mail fails), then emails the site's contact address.
+ * Protected by a honeypot and a per-IP throttle. No nonce: anonymous nonces expire
+ * on cached pages and do not stop bots.
  */
+add_action( 'init', function () {
+	register_post_type( 'kg_lead', array(
+		'labels'       => array( 'name' => __( 'Leads', 'kgstudios' ), 'singular_name' => __( 'Lead', 'kgstudios' ) ),
+		'public'       => false,
+		'show_ui'      => true,
+		'menu_icon'    => 'dashicons-email-alt',
+		'supports'     => array( 'title', 'editor' ),
+		'capabilities' => array( 'create_posts' => 'do_not_allow' ),
+		'map_meta_cap' => true,
+	) );
+} );
+
 add_action( 'admin_post_nopriv_kg_lead', 'kg_handle_lead' );
 add_action( 'admin_post_kg_lead', 'kg_handle_lead' );
 
-function kg_lead_redirect( $status ) {
-	$back = wp_get_referer() ? wp_get_referer() : home_url( '/' );
-	$back = remove_query_arg( 'kg_sent', $back );
-	wp_safe_redirect( add_query_arg( 'kg_sent', $status, $back ) . '#contact' );
-	exit;
+/** Visitor IP. Behind Cloudflare, REMOTE_ADDR is the proxy, so prefer its header. */
+function kg_client_ip() {
+	$ip = $_SERVER['HTTP_CF_CONNECTING_IP'] ?? $_SERVER['REMOTE_ADDR'] ?? '';
+	return filter_var( $ip, FILTER_VALIDATE_IP ) ? $ip : '';
 }
 
-function kg_handle_lead() {
-	if ( ! isset( $_POST['kg_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['kg_nonce'] ) ), 'kg_lead' ) ) {
-		kg_lead_redirect( 'error' );
-	}
-	// Honeypot: real users leave this empty.
-	if ( ! empty( $_POST['kg_website'] ) ) {
-		kg_lead_redirect( 'ok' );
+/**
+ * Validates, stores and emails one enquiry.
+ *
+ * @param array  $in Unslashed form fields.
+ * @param string $ip Visitor IP, used for the throttle.
+ * @return string ok | wait | invalid | error
+ */
+function kg_process_lead( array $in, $ip ) {
+	// Honeypot: real users leave this empty. Pretend success so bots learn nothing.
+	if ( ! empty( $in['kg_website'] ) ) {
+		return 'ok';
 	}
 
-	$ip  = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
 	$key = 'kg_lead_' . md5( $ip );
 	if ( get_transient( $key ) ) {
-		kg_lead_redirect( 'wait' );
+		return 'wait';
 	}
 
-	$f = function ( $name, $multiline = false ) {
-		$v = isset( $_POST[ $name ] ) ? wp_unslash( $_POST[ $name ] ) : '';
+	$f = function ( $name, $multiline = false ) use ( $in ) {
+		$v = isset( $in[ $name ] ) ? $in[ $name ] : '';
 		return $multiline ? sanitize_textarea_field( $v ) : sanitize_text_field( $v );
 	};
 
-	$name    = $f( 'kg_name' );
-	$email   = sanitize_email( isset( $_POST['kg_email'] ) ? wp_unslash( $_POST['kg_email'] ) : '' );
-	$phone   = $f( 'kg_phone' );
-	$company = $f( 'kg_company' );
-	$type    = $f( 'kg_type' );
-	$service = $f( 'kg_service' );
-	$message = $f( 'kg_message', true );
-
+	$name  = $f( 'kg_name' );
+	$email = sanitize_email( isset( $in['kg_email'] ) ? $in['kg_email'] : '' );
 	if ( '' === $name || ! is_email( $email ) ) {
-		kg_lead_redirect( 'invalid' );
+		return 'invalid';
 	}
 
-	$body = "Name: $name\nEmail: $email\nPhone: $phone\nCompany / Role: $company\nI am a: $type\nNeeds help with: $service\n\n$message\n";
-	$sent = wp_mail(
+	$body = sprintf(
+		"Name: %s\nEmail: %s\nPhone: %s\nCompany / Role: %s\nI am a: %s\nNeeds help with: %s\n\n%s\n",
+		$name, $email, $f( 'kg_phone' ), $f( 'kg_company' ), $f( 'kg_type' ), $f( 'kg_service' ), $f( 'kg_message', true )
+	);
+
+	$saved = wp_insert_post( array(
+		'post_type'    => 'kg_lead',
+		'post_status'  => 'private',
+		'post_title'   => $name,
+		'post_content' => $body,
+	) );
+	$sent  = wp_mail(
 		kg_opt( 'email' ),
 		sprintf( '[KG Studios] New enquiry from %s', $name ),
 		$body,
 		array( 'Reply-To: ' . $name . ' <' . $email . '>' )
 	);
 
-	if ( $sent ) {
-		set_transient( $key, 1, 60 );
+	// Stored or emailed means the lead is safe; only fail when both did.
+	if ( ! $sent && ( ! $saved || is_wp_error( $saved ) ) ) {
+		return 'error';
 	}
-	kg_lead_redirect( $sent ? 'ok' : 'error' );
+	set_transient( $key, 1, 60 );
+	return 'ok';
 }
 
-/** Renders the multi-step lead form. $id keeps radio/label ids unique per instance. */
+function kg_handle_lead() {
+	$status = kg_process_lead( wp_unslash( $_POST ), kg_client_ip() );
+	$back   = wp_get_referer() ? wp_get_referer() : home_url( '/' );
+	$back   = remove_query_arg( 'kg_sent', $back );
+	wp_safe_redirect( add_query_arg( 'kg_sent', $status, $back ) . '#contact' );
+	exit;
+}
+
+/** Renders the multi-step lead form. $id keeps ids unique per instance. */
 function kg_lead_form( $id = 'lead' ) {
 	$types    = array( 'Startup', 'Founder', 'Corporate Team', 'Consulting Firm', 'Other' );
 	$services = array( 'Presentations', 'Brand Identity', 'Digital Design', 'Other' );
@@ -74,10 +104,15 @@ function kg_lead_form( $id = 'lead' ) {
 		'invalid' => array( 'err', __( 'Please enter your name and a valid email.', 'kgstudios' ) ),
 		'error'   => array( 'err', __( 'Something went wrong. Please email us directly.', 'kgstudios' ) ),
 	);
+
+	// After a successful send, show only the thank-you, not an empty form.
+	if ( 'ok' === $status ) {
+		printf( '<p class="lead__note lead__note--ok" role="status">%s</p>', esc_html( $notes['ok'][1] ) );
+		return;
+	}
 	?>
 	<form class="lead" id="<?php echo esc_attr( $id ); ?>" method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" data-steps>
 		<input type="hidden" name="action" value="kg_lead">
-		<?php wp_nonce_field( 'kg_lead', 'kg_nonce' ); ?>
 		<div class="lead__hp" aria-hidden="true"><label>Website <input type="text" name="kg_website" tabindex="-1" autocomplete="off"></label></div>
 
 		<?php if ( isset( $notes[ $status ] ) ) : ?>

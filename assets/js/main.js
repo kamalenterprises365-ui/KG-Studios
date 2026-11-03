@@ -72,8 +72,14 @@
 	/* Parallax orbs */
 	const orbs = $$('[data-parallax]');
 	if (orbs.length && !reduce) {
+		let pTick = false;
 		addEventListener('scroll', () => {
-			orbs.forEach((o) => { o.style.transform = `translate3d(0, ${scrollY * parseFloat(o.dataset.parallax)}px, 0)`; });
+			if (pTick) return;
+			pTick = true;
+			requestAnimationFrame(() => {
+				orbs.forEach((o) => { o.style.transform = `translate3d(0, ${scrollY * parseFloat(o.dataset.parallax)}px, 0)`; });
+				pTick = false;
+			});
 		}, { passive: true });
 	}
 

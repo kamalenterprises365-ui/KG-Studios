@@ -53,8 +53,11 @@ ul { margin: 0; padding: 0; list-style: none; }
 .btn--ghost:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
 
 /* Header */
-.site-header { position: fixed; inset: 0 0 auto; z-index: 100; padding: 1.1rem 0; transition: background .35s, padding .35s, backdrop-filter .35s, transform .4s var(--ease); }
-.site-header.is-stuck { background: rgba(10, 12, 16, .78); backdrop-filter: blur(16px) saturate(1.4); -webkit-backdrop-filter: blur(16px) saturate(1.4); padding: .65rem 0; border-bottom: 1px solid var(--line); }
+.site-header { position: fixed; inset: 0 0 auto; z-index: 100; padding: 1.1rem 0; transition: padding .35s, transform .4s var(--ease); }
+/* Blur lives on a pseudo-element: backdrop-filter on the header itself would make it the containing block for the fixed mobile menu. */
+.site-header::before { content: ""; position: absolute; inset: 0; z-index: -1; background: rgba(10, 12, 16, .78); backdrop-filter: blur(16px) saturate(1.4); -webkit-backdrop-filter: blur(16px) saturate(1.4); border-bottom: 1px solid var(--line); opacity: 0; transition: opacity .35s; }
+.site-header.is-stuck { padding: .65rem 0; }
+.site-header.is-stuck::before { opacity: 1; }
 .site-header.is-hidden { transform: translateY(-100%); }
 .site-header__in { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
 .brand img { height: 38px; width: auto; }
