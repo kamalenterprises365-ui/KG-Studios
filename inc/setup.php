@@ -47,7 +47,10 @@ add_filter( 'wp_resource_hints', function ( $urls, $relation ) {
 
 /** Theme image URL helper. */
 function kg_img( $file ) {
-	return esc_url( get_template_directory_uri() . '/assets/img/' . $file );
+	$path = get_template_directory() . '/assets/img/' . $file;
+	// The file's mtime in the URL means a replaced image is never served from a stale browser or CDN cache.
+	$ver = file_exists( $path ) ? '?v=' . filemtime( $path ) : '';
+	return esc_url( get_template_directory_uri() . '/assets/img/' . $file . $ver );
 }
 
 /**
