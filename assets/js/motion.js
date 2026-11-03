@@ -31,8 +31,12 @@
 			requestAnimationFrame(frame);
 		};
 		let lensX = 0, lensY = 0;
-		hero.addEventListener('pointermove', (e) => { lensX = e.clientX; lensY = e.clientY; pointing = true; clearTimeout(last); last = setTimeout(() => { pointing = false; }, 2500); });
-		hero.addEventListener('pointerleave', () => { pointing = false; });
+		hero.addEventListener('pointermove', (e) => {
+			const b = hero.getBoundingClientRect();
+			name.style.setProperty('--ty', (((e.clientX - b.left) / b.width - 0.5) * 6).toFixed(2) + 'deg');
+			name.style.setProperty('--tx', (((e.clientY - b.top) / b.height - 0.5) * -4).toFixed(2) + 'deg');
+			lensX = e.clientX; lensY = e.clientY; pointing = true; clearTimeout(last); last = setTimeout(() => { pointing = false; }, 2500); });
+		hero.addEventListener('pointerleave', () => { pointing = false; name.style.removeProperty('--tx'); name.style.removeProperty('--ty'); });
 		requestAnimationFrame(frame);
 	}
 

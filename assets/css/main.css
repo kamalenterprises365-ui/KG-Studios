@@ -106,6 +106,7 @@ em { font-style: normal; }
 .hero .statement { max-width: 24em; margin: 0; }
 .hero__actions { display: flex; flex-wrap: wrap; gap: .8rem; }
 .hero__name { display: grid; margin: 0; font: 700 var(--s-display)/.8 var(--display); letter-spacing: -.05em; white-space: nowrap; max-width: none; text-align: left; margin-left: -.04em; }
+.hero__name { transform: perspective(1200px) rotateX(var(--tx, 0deg)) rotateY(var(--ty, 0deg)); transition: transform .4s var(--ease); transform-origin: 50% 100%; }
 .hero__ink, .hero__lens { grid-area: 1 / 1; }
 .hero__lens { background: url(../img/hero-mosaic.jpg) 0 50% / auto 120% repeat-x; -webkit-background-clip: text; background-clip: text; color: var(--ink); -webkit-text-fill-color: transparent; animation: drift 30s linear infinite alternate; pointer-events: none; /* taste-skill-ignore: lettering filled with real slide pictures, not a gradient */ }
 .hero__name.is-lens .hero__lens { clip-path: circle(var(--r, 0px) at var(--mx, 50%) var(--my, 50%)); }
@@ -126,7 +127,7 @@ em { font-style: normal; }
 .marquee { overflow: hidden; }
 .marquee__track { display: flex; align-items: center; gap: 4.5rem; width: max-content; animation: marquee 40s linear infinite; }
 .marquee:hover .marquee__track { animation-play-state: paused; }
-.marquee img { height: 3rem; width: auto; opacity: .8; filter: brightness(0); transition: opacity .3s; }
+.marquee img { height: 3rem; width: auto; opacity: .85; transition: opacity .3s; }
 .marquee img:hover { opacity: 1; }
 
 /* Services index */

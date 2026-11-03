@@ -1,11 +1,11 @@
 <?php
 /**
- * Client logo strip. Args: field (paper|ink|gold|teal).
+ * Client logo strip. Args: field (ink|paper|gold|teal). The logo files are white, so they show in their real form on ink and teal.
  */
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-$a       = wp_parse_args( $args, array( 'field' => 'paper' ) );
+$a       = wp_parse_args( $args, array( 'field' => 'ink' ) );
 $clients = kg_content( 'clients' );
 ?>
 <section class="logos f-<?php echo esc_attr( $a['field'] ); ?>" aria-label="<?php esc_attr_e( 'Clients', 'kgstudios' ); ?>">

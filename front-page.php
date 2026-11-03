@@ -1,7 +1,7 @@
 <?php
 /**
  * Home page. Every section is a full-bleed "slide" in one flat brand colour:
- * gold, paper, ink, paper, teal, ink, gold, paper, ink, paper, teal, gold, ink.
+ * gold, ink, gold, paper, teal, ink, gold, paper, ink, paper, teal, gold, ink.
  */
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -31,7 +31,7 @@ $aud = kg_content( 'audiences' );
 <?php
 get_template_part( 'template-parts/section', 'logos' );
 ?>
-<section class="section f-ink" id="intro">
+<section class="section f-gold" id="intro">
 	<div class="wrap">
 		<h2 data-reveal="up"><?php esc_html_e( 'Win approvals. Secure funding. Drive growth.', 'kgstudios' ); ?></h2>
 		<p class="statement" data-reveal="up" style="--d:.08s"><?php esc_html_e( 'We turn complex ideas into persuasive presentations, powerful brands, and high-performing digital experiences – helping you win approvals, secure funding, and drive growth.', 'kgstudios' ); ?></p>
