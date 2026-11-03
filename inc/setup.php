@@ -51,19 +51,14 @@ function kg_img( $file ) {
 }
 
 /**
- * Inline logo that takes the ink of whatever field it sits on (the file itself is white).
- * The gold part shows only where --logo-accent is set, i.e. on dark fields.
+ * The original KG Studios logo, inline and unchanged (white letters, gold mark). It always sits on an
+ * ink tile (.brand), so it keeps its real colours on every chapter.
  */
 function kg_logo( $class = '' ) {
 	static $svg = null;
 	if ( null === $svg ) {
 		$raw = (string) file_get_contents( get_template_directory() . '/assets/img/logo.svg' );
-		$raw = preg_replace( '/\s(?:id|data-name|width|height)="[^"]*"/', '', $raw );
-		$svg = str_replace(
-			array( '.cls-1 { fill: #fff; }', '.cls-2 { fill: #d8a53e; }' ),
-			array( '.kg-logo .cls-1 { fill: currentColor; }', '.kg-logo .cls-2 { fill: var(--logo-accent, currentColor); }' ),
-			$raw
-		);
+		$svg = preg_replace( '/\s(?:id|data-name|width|height)="[^"]*"/', '', $raw );
 	}
 	return str_replace( '<svg ', '<svg class="kg-logo ' . esc_attr( $class ) . '" role="img" aria-label="KG Studios" ', $svg );
 }

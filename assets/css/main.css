@@ -73,12 +73,12 @@ em { font-style: normal; }
 .btn--ghost { background: var(--tile); color: var(--fg); }
 
 /* Header: plain bar, no blur. It takes the ink of the chapter beneath it (motion.js sets data-ink). */
-.site-header { position: fixed; inset: 0 0 auto; z-index: 100; color: var(--ink); --logo-accent: currentColor; transition: color .3s, transform .4s var(--ease); }
-.site-header[data-ink="dark"] { color: var(--paper); --logo-accent: var(--gold); }
+.site-header { position: fixed; inset: 0 0 auto; z-index: 100; color: var(--ink); transition: color .3s, transform .4s var(--ease); }
+.site-header[data-ink="dark"] { color: var(--paper); }
 .site-header.is-hidden { transform: translateY(-100%); }
 .site-header__in { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding: 1.1rem var(--m); }
-.brand { display: block; }
-.brand .kg-logo, .brand img { height: 2.6rem; width: auto; }
+.brand { display: block; padding: .6rem 1rem; background: var(--ink); }
+.brand .kg-logo, .brand img { display: block; height: 2.2rem; width: auto; }
 .nav { display: flex; align-items: center; gap: 2rem; }
 .nav__list { display: flex; gap: 2rem; }
 .nav__list a { position: relative; display: block; padding: .4rem 0; font: 600 var(--s-body)/1 var(--body); }
@@ -305,7 +305,7 @@ em { font-style: normal; }
 	.bar { flex-direction: column; }
 	.bar__block { min-height: 6rem; }
 	.burger { display: block; z-index: 2; }
-	.nav { position: fixed; inset: 0 0 0 auto; width: min(360px, 88vw); flex-direction: column; align-items: flex-start; justify-content: center; gap: 1.6rem; padding: 2rem; background: var(--ink); color: var(--paper); --logo-accent: var(--gold); transform: translateX(100%); transition: transform .5s var(--ease); }
+	.nav { position: fixed; inset: 0 0 0 auto; width: min(360px, 88vw); flex-direction: column; align-items: flex-start; justify-content: center; gap: 1.6rem; padding: 2rem; background: var(--ink); color: var(--paper); transform: translateX(100%); transition: transform .5s var(--ease); }
 	.nav.is-open { transform: none; }
 	.nav__list { flex-direction: column; gap: 1.1rem; }
 	.sub-menu { position: static; opacity: 1; visibility: visible; transform: none; min-width: 0; padding: .6rem 0 0 1rem; background: none; }

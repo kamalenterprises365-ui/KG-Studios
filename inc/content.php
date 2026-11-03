@@ -45,10 +45,10 @@ function kg_content( $key ) {
 			),
 			'pairs' => array( 1, 3, 5, 7, 9, 11 ),
 			'team' => array(
-				array( 'Kamal Ghanghaz', 'Co-Founder & Creative Director', 'Ex-BCG, ZS & KPMG. 15+ years of experience', 'team-kamal.png' ),
-				array( 'Kavita Dahiyaa', 'Sr. presentation specialist', '15+ years of experience in design and strategy', 'team-kavita.png' ),
+				array( 'Kamal Ghanghas', 'Co-Founder & Creative Director', 'Ex-BCG, ZS & KPMG. 15+ years of experience', 'team-kamal.png' ),
+				array( 'Kavita Dahiya', 'Sr. presentation specialist', '15+ years of experience in design and strategy', 'team-kavita.png' ),
 				array( 'Aditya Malik', 'Presentation specialist', '5+ years of experience', 'team-aditya.png' ),
-				array( 'Sahil Kumar', 'Brand specialist', '3+ years of experience', 'team-sahil.png' ),
+				array( 'Sahil Sheoran', 'Marketing and automation specialist', '3+ years of experience', 'team-sahil.png' ),
 			),
 			'testimonials' => array(
 				array( 'Rahul M.', 'Co-Founder, Series A Fintech Startup, India', 'We had a strong story but needed it to come to life visually. KG Studios helped us build a brand identity and pitch deck that truly represented who we are. Investors noticed the difference immediately – we looked as credible as we felt.' ),
