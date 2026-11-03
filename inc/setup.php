@@ -114,6 +114,20 @@ function kg_fallback_menu() {
 	echo '</ul>';
 }
 
+/**
+ * The old Elementor Home page uses Elementor's Canvas template, which replaces whatever template
+ * the theme picks. Always render the theme's own home for the front page.
+ */
+add_filter( 'template_include', function ( $template ) {
+	if ( is_front_page() ) {
+		$home = locate_template( 'front-page.php' );
+		if ( $home ) {
+			return $home;
+		}
+	}
+	return $template;
+}, 99 );
+
 /** Remove emoji scripts; unused. */
 remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
 remove_action( 'wp_print_styles', 'print_emoji_styles' );
