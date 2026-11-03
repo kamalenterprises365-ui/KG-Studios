@@ -19,7 +19,7 @@ $aud = kg_content( 'audiences' );
 		</div>
 	</div>
 	<h1 class="hero__name" data-lens>
-		<span class="hero__ink">KG Studios</span>
+		<span class="hero__ink">KG Studios</span><span class="sr-only"> – <?php esc_html_e( 'Presentation and brand design agency in Gurgaon, India', 'kgstudios' ); ?></span>
 		<span class="hero__lens" aria-hidden="true">KG Studios</span>
 	</h1>
 	<div class="hero__actions">

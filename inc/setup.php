@@ -47,7 +47,15 @@ add_filter( 'wp_resource_hints', function ( $urls, $relation ) {
 
 /** Theme image URL helper. */
 function kg_img( $file ) {
-	$path = get_template_directory() . '/assets/img/' . $file;
+	$dir = get_template_directory() . '/assets/img/';
+	// Serve the WebP twin (about 45% smaller) when one exists; the favicon stays PNG.
+	if ( 'favicon.png' !== $file && preg_match( '/\.(jpe?g|png)$/i', $file ) ) {
+		$webp = preg_replace( '/\.(jpe?g|png)$/i', '.webp', $file );
+		if ( file_exists( $dir . $webp ) ) {
+			$file = $webp;
+		}
+	}
+	$path = $dir . $file;
 	// The file's mtime in the URL means a replaced image is never served from a stale browser or CDN cache.
 	$ver = file_exists( $path ) ? '?v=' . filemtime( $path ) : '';
 	return esc_url( get_template_directory_uri() . '/assets/img/' . $file . $ver );

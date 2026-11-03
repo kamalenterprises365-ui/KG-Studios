@@ -41,6 +41,13 @@ function kg_install() {
 	kg_install_menu( 'primary', 'KG Primary', kg_menu_tree( 'primary' ), $ids );
 	kg_install_menu( 'footer', 'KG Footer', kg_menu_tree( 'footer' ), $ids );
 
+	// Author archives are redirected home (inc/seo.php); tell Yoast so its sitemap stops listing them.
+	$titles = get_option( 'wpseo_titles' );
+	if ( is_array( $titles ) && empty( $titles['disable-author'] ) ) {
+		$titles['disable-author'] = true;
+		update_option( 'wpseo_titles', $titles );
+	}
+
 	flush_rewrite_rules( false );
 	update_option( 'kg_installed', KG_VERSION );
 }

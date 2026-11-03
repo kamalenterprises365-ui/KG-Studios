@@ -23,6 +23,11 @@ Services (Presentation Design with 9 sub-pages, Brand Identity, Digital Design),
 - *KG Studios contact & social*: email, phone, WhatsApp (shows a chat button), booking link (shows a "Book a call" button), address, social URLs.
 - *KG Studios quote calculator*: per-slide rates. Leave blank to hide the calculator on Pricing.
 
+## SEO
+- `inc/seo.php`: per-page titles (about 60 characters) and descriptions (about 155) in `kg_seo_table()`, applied even when Yoast is active; JSON-LD for the agency (with service catalogue and founder), each service, FAQs and breadcrumbs; robots rules (thank-you page and the default "Hello world" post are noindexed and kept out of sitemaps; author archives redirect home); `llms.txt` for AI search at `/llms.txt`.
+- Images are served as WebP when a `.webp` twin exists next to the original (about 45% smaller).
+- After deploying: Search Console → Sitemaps → submit `sitemap_index.xml`, then request indexing for the home page.
+
 ## Notes
 - Analytics: GA4 and Search Console tags are in `inc/setup.php` with Consent Mode v2 and a cookie banner. Do not also run Site Kit's tag.
 - Footer legal links (Privacy, Terms, Cookie policy, Confidentiality, Accessibility) appear when pages with those slugs exist.

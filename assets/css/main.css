@@ -43,6 +43,7 @@ p { margin: 0 0 1em; }
 ul, ol { margin: 0; padding: 0; list-style: none; }
 button { font: inherit; }
 :focus-visible { outline: 3px solid currentColor; outline-offset: 3px; text-decoration: underline; text-underline-offset: .2em; }
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .skip { position: absolute; left: -999px; top: 0; z-index: 400; padding: .8rem 1.2rem; background: var(--gold); color: var(--ink); }
 .skip:focus { left: 0; }
 .center { text-align: center; }
@@ -108,7 +109,7 @@ em { font-style: normal; }
 .hero__name { display: grid; margin: 0; font: 700 var(--s-display)/.8 var(--display); letter-spacing: -.05em; white-space: nowrap; max-width: none; text-align: left; margin-left: -.04em; }
 .hero__name { transform: perspective(1200px) rotateX(var(--tx, 0deg)) rotateY(var(--ty, 0deg)); transition: transform .4s var(--ease); transform-origin: 50% 100%; }
 .hero__ink, .hero__lens { grid-area: 1 / 1; }
-.hero__lens { background: url(../img/hero-mosaic.jpg) 0 50% / auto 120% repeat-x; -webkit-background-clip: text; background-clip: text; color: var(--ink); -webkit-text-fill-color: transparent; animation: drift 30s linear infinite alternate; pointer-events: none; /* taste-skill-ignore: lettering filled with real slide pictures, not a gradient */ }
+.hero__lens { background: url(../img/hero-mosaic.webp) 0 50% / auto 120% repeat-x; -webkit-background-clip: text; background-clip: text; color: var(--ink); -webkit-text-fill-color: transparent; animation: drift 30s linear infinite alternate; pointer-events: none; /* taste-skill-ignore: lettering filled with real slide pictures, not a gradient */ }
 .hero__name.is-lens .hero__lens { clip-path: circle(var(--r, 0px) at var(--mx, 50%) var(--my, 50%)); }
 .rotator { position: relative; width: min(30rem, 100%); min-height: 3.2em; }
 .rotator span { position: absolute; inset: 0 auto auto 0; font-weight: 600; opacity: 0; visibility: hidden; transform: translateY(12px); transition: opacity .6s var(--ease), transform .6s var(--ease), visibility 0s .6s; }
