@@ -59,9 +59,10 @@ function kg_process_lead( array $in, $ip ) {
 		return 'invalid';
 	}
 
+	$link = esc_url_raw( isset( $in['kg_link'] ) ? $in['kg_link'] : '' );
 	$body = sprintf(
-		"Name: %s\nEmail: %s\nPhone: %s\nCompany / Role: %s\nI am a: %s\nNeeds help with: %s\n\n%s\n",
-		$name, $email, $f( 'kg_phone' ), $f( 'kg_company' ), $f( 'kg_type' ), $f( 'kg_service' ), $f( 'kg_message', true )
+		"Name: %s\nEmail: %s\nPhone: %s\nCompany / Role: %s\nI am a: %s\nNeeds help with: %s\nFiles link: %s\n\n%s\n",
+		$name, $email, $f( 'kg_phone' ), $f( 'kg_company' ), $f( 'kg_type' ), $f( 'kg_service' ), $link, $f( 'kg_message', true )
 	);
 
 	$saved = wp_insert_post( array(
@@ -87,6 +88,11 @@ function kg_process_lead( array $in, $ip ) {
 
 function kg_handle_lead() {
 	$status = kg_process_lead( wp_unslash( $_POST ), kg_client_ip() );
+	$thanks = get_page_by_path( 'contact/thank-you' );
+	if ( 'ok' === $status && $thanks ) {
+		wp_safe_redirect( get_permalink( $thanks ) );
+		exit;
+	}
 	$back   = wp_get_referer() ? wp_get_referer() : home_url( '/' );
 	$back   = remove_query_arg( 'kg_sent', $back );
 	wp_safe_redirect( add_query_arg( 'kg_sent', $status, $back ) . '#contact' );
@@ -98,6 +104,8 @@ function kg_lead_form( $id = 'lead' ) {
 	$types    = array( 'Startup', 'Founder', 'Corporate Team', 'Consulting Firm', 'Other' );
 	$services = array( 'Presentations', 'Brand Identity', 'Digital Design', 'Other' );
 	$status   = isset( $_GET['kg_sent'] ) ? sanitize_key( $_GET['kg_sent'] ) : '';
+	$slides   = isset( $_GET['slides'] ) ? absint( $_GET['slides'] ) : 0;
+	$prefill  = $slides ? sprintf( 'I need about %d slides. ', $slides ) : '';
 	$notes    = array(
 		'ok'      => array( 'ok', __( 'Thank you. We will get back to you shortly.', 'kgstudios' ) ),
 		'wait'    => array( 'err', __( 'Please wait a minute before sending another message.', 'kgstudios' ) ),
@@ -152,7 +160,8 @@ function kg_lead_form( $id = 'lead' ) {
 				<label class="field"><span><?php esc_html_e( 'Phone (Optional)', 'kgstudios' ); ?></span><input type="tel" name="kg_phone" autocomplete="tel"></label>
 				<label class="field"><span><?php esc_html_e( 'Company / Role', 'kgstudios' ); ?></span><input type="text" name="kg_company" autocomplete="organization"></label>
 			</div>
-			<label class="field"><span><?php esc_html_e( 'Tell us about your project', 'kgstudios' ); ?></span><textarea name="kg_message" rows="4"></textarea></label>
+			<label class="field"><span><?php esc_html_e( 'Tell us about your project', 'kgstudios' ); ?></span><textarea name="kg_message" rows="4"><?php echo esc_textarea( $prefill ); ?></textarea></label>
+			<label class="field"><span><?php esc_html_e( 'Link to your files (Drive, Dropbox, WeTransfer) – optional', 'kgstudios' ); ?></span><input type="url" name="kg_link" placeholder="https://" autocomplete="off"></label>
 			<div class="lead__nav">
 				<button type="button" class="btn btn--ghost" data-prev><?php esc_html_e( 'Back', 'kgstudios' ); ?></button>
 				<button type="submit" class="btn btn--gold"><?php esc_html_e( "Let's Talk", 'kgstudios' ); ?></button>

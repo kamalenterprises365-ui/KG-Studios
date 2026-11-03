@@ -9,4 +9,5 @@ get_template_part( 'template-parts/page', 'hero', array(
 	'lead'    => __( "Tell us who you are and what you need – we'll do the rest.", 'kgstudios' ),
 ) );
 get_template_part( 'template-parts/section', 'cta' );
+get_template_part( 'template-parts/section', 'faq', array( 'items' => array( 1, 5, 6 ) ) );
 get_footer();

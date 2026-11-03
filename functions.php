@@ -7,10 +7,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'KG_VERSION', '1.0.0' );
+define( 'KG_VERSION', '2.0.0' );
 
-require_once get_template_directory() . '/inc/setup.php';
-require_once get_template_directory() . '/inc/content.php';
-require_once get_template_directory() . '/inc/customizer.php';
-require_once get_template_directory() . '/inc/contact-form.php';
-require_once get_template_directory() . '/inc/install.php';
+$kg_inc = get_template_directory() . '/inc/';
+require_once $kg_inc . 'pages-data.php';
+require_once $kg_inc . 'setup.php';
+require_once $kg_inc . 'content.php';
+require_once $kg_inc . 'post-types.php';
+require_once $kg_inc . 'customizer.php';
+require_once $kg_inc . 'contact-form.php';
+require_once $kg_inc . 'seo.php';
+require_once $kg_inc . 'install.php';
+unset( $kg_inc );

@@ -6,10 +6,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 get_header();
-$aud = kg_content( 'audiences' );
-$imgs = kg_content( 'hero_images' );
+$aud   = kg_content( 'audiences' );
+$cards = array( 2, 4, 6, 8, 10 ); // "after" slides, front card first.
 ?>
-<section class="hero">
+<section class="hero" data-slide="<?php esc_attr_e( 'Welcome', 'kgstudios' ); ?>">
 	<div class="orb orb--gold" data-parallax="0.18"></div>
 	<div class="orb orb--teal" data-parallax="-0.12"></div>
 	<div class="grid-bg" aria-hidden="true"></div>
@@ -18,43 +18,48 @@ $imgs = kg_content( 'hero_images' );
 			<p class="eyebrow" data-reveal><?php esc_html_e( 'Welcome to KG Studios', 'kgstudios' ); ?></p>
 			<h1 data-reveal="up" style="--d:.05s">
 				<?php esc_html_e( 'Presentation & Brand Design Agency for', 'kgstudios' ); ?>
-				<span class="gold">Founders, Corporates &amp; Consulting Firms</span>
+				<em class="gold">Founders, Corporates &amp; Consulting Firms</em>
 			</h1>
 			<p class="hero__region" data-reveal="up" style="--d:.1s">– Indian &amp; Middle East</p>
-			<div class="rotator" data-rotator data-reveal="up" style="--d:.15s" aria-live="polite">
+			<div class="rotator" data-rotator data-reveal="up" style="--d:.15s">
 				<?php foreach ( $aud as $i => $line ) : ?>
-					<span class="<?php echo 0 === $i ? 'is-on' : ''; ?>"><?php echo esc_html( $line ); ?></span>
+					<span class="<?php echo 0 === $i ? 'is-on' : ''; ?>"<?php echo 0 === $i ? '' : ' aria-hidden="true"'; ?>><?php echo esc_html( $line ); ?></span>
 				<?php endforeach; ?>
 			</div>
 			<p class="lead-text" data-reveal="up" style="--d:.2s"><?php esc_html_e( 'We turn complex ideas into persuasive presentations, powerful brands, and high-performing digital experiences – helping you win approvals, secure funding, and drive growth.', 'kgstudios' ); ?></p>
 			<div class="hero__actions" data-reveal="up" style="--d:.25s">
-				<a class="btn btn--gold magnet" href="#contact-us"><?php esc_html_e( "Let's Talk", 'kgstudios' ); ?></a>
-				<a class="btn btn--ghost" href="#our_work"><?php esc_html_e( 'See the transformation', 'kgstudios' ); ?></a>
+				<a class="btn btn--gold magnet" href="<?php echo esc_url( kg_page_url( 'contact' ) ); ?>"><?php esc_html_e( 'Get a quote', 'kgstudios' ); ?></a>
+				<a class="btn btn--ghost" href="<?php echo esc_url( kg_page_url( 'work' ) ); ?>"><?php esc_html_e( 'See our work', 'kgstudios' ); ?></a>
 			</div>
 		</div>
 
 		<div class="hero__visual" data-reveal="right">
-			<div class="stack" data-rotator-img>
-				<?php foreach ( $imgs as $i => $img ) : ?>
-					<img class="<?php echo 0 === $i ? 'is-on' : ''; ?>" src="<?php echo kg_img( $img ); ?>" alt="" <?php echo 0 === $i ? 'fetchpriority="high"' : 'loading="lazy"'; ?> width="1000" height="667">
-				<?php endforeach; ?>
+			<div class="deck3d" data-deck3d aria-hidden="true">
+				<div class="deck3d__float">
+					<div class="deck3d__inner">
+						<?php foreach ( $cards as $i => $n ) : ?>
+							<figure class="deck3d__card" style="--i:<?php echo (int) $i; ?>">
+								<img src="<?php echo kg_img( 'slide-' . $n . '.jpeg' ); ?>" alt="" width="800" height="450" <?php echo 0 === $i ? 'fetchpriority="high"' : 'loading="lazy"'; ?>>
+							</figure>
+						<?php endforeach; ?>
+					</div>
+				</div>
 			</div>
 			<div class="float float--a"><?php esc_html_e( 'BCG · KPMG · ZS alumni', 'kgstudios' ); ?></div>
 			<div class="float float--b"><?php esc_html_e( 'India & Middle East', 'kgstudios' ); ?></div>
 		</div>
 	</div>
-
-	<div class="wrap hero__form" data-reveal="up" style="--d:.3s">
-		<p class="hero__form-t"><?php esc_html_e( "Tell us who you are and what you need – we'll do the rest.", 'kgstudios' ); ?></p>
-		<?php kg_lead_form( 'lead-hero' ); ?>
-	</div>
+	<a class="scroll-cue" href="#what_we_do" aria-label="<?php esc_attr_e( 'Scroll to services', 'kgstudios' ); ?>"><span></span></a>
 </section>
 
 <?php
 get_template_part( 'template-parts/section', 'logos' );
+get_template_part( 'template-parts/section', 'scene' );
 get_template_part( 'template-parts/section', 'services' );
+get_template_part( 'template-parts/section', 'game' );
 get_template_part( 'template-parts/section', 'why' );
 get_template_part( 'template-parts/section', 'effect', array( 'limit' => 4 ) );
+get_template_part( 'template-parts/section', 'process' );
 get_template_part( 'template-parts/section', 'team' );
 get_template_part( 'template-parts/section', 'testimonials' );
 get_template_part( 'template-parts/section', 'cta' );

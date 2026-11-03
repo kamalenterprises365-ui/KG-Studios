@@ -2,8 +2,9 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+$wa = preg_replace( '/\D/', '', (string) kg_opt( 'whatsapp' ) );
 ?>
-<section class="section cta" id="contact-us">
+<section class="section cta" id="contact-us" data-slide="<?php esc_attr_e( 'Contact', 'kgstudios' ); ?>">
 	<div class="orb orb--gold" data-parallax="0.12"></div>
 	<div class="wrap cta__grid">
 		<div data-reveal="left">
@@ -17,6 +18,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<?php endif; ?>
 				<li><span><?php esc_html_e( 'Studio', 'kgstudios' ); ?></span><?php echo esc_html( kg_opt( 'address' ) ); ?></li>
 			</ul>
+			<?php if ( $wa || kg_opt( 'booking' ) ) : ?>
+				<p class="cta__quick">
+					<?php if ( kg_opt( 'booking' ) ) : ?><a class="btn btn--ghost" href="<?php echo esc_url( kg_opt( 'booking' ) ); ?>" target="_blank" rel="noopener"><?php esc_html_e( 'Book a 20-minute call', 'kgstudios' ); ?></a><?php endif; ?>
+					<?php if ( $wa ) : ?><a class="btn btn--ghost" href="<?php echo esc_url( 'https://wa.me/' . $wa ); ?>" target="_blank" rel="noopener"><?php esc_html_e( 'Chat on WhatsApp', 'kgstudios' ); ?></a><?php endif; ?>
+				</p>
+			<?php endif; ?>
 		</div>
 		<div class="cta__form" data-reveal="right" id="contact">
 			<?php kg_lead_form( 'lead-' . wp_unique_id() ); ?>

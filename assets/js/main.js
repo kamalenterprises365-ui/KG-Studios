@@ -3,7 +3,7 @@
 	'use strict';
 	const $ = (s, r = document) => r.querySelector(s);
 	const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
-	const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+	const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.classList.contains('reduce-motion');
 	const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
 
 	/* Header: stuck state, hide on scroll down, scroll progress */
@@ -119,8 +119,6 @@
 	};
 	const rot = $('[data-rotator]');
 	if (rot) cycle($$('span', rot), 3600);
-	const stack = $('[data-rotator-img]');
-	if (stack) cycle($$('img', stack), 3600);
 
 	/* Before / after sliders */
 	$$('[data-ba]').forEach((fig) => {
