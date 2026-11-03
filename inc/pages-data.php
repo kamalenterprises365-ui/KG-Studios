@@ -277,15 +277,14 @@ function kg_page_data( $slug ) {
 	return isset( $all[ $slug ] ) && 'template' !== $all[ $slug ]['type'] ? $all[ $slug ] : null;
 }
 
-/** Permalink for a data page by slug (falls back to a path that will resolve once the page exists). */
+/** Permalink for a data page by slug: builds its path from the page tree, then reads the shared page map. */
 function kg_slug_url( $slug ) {
-	$all = kg_pages();
+	$all  = kg_pages();
 	$path = $slug;
 	for ( $p = $all[ $slug ]['parent'] ?? ''; $p; $p = $all[ $p ]['parent'] ?? '' ) {
 		$path = $p . '/' . $path;
 	}
-	$page = get_page_by_path( $path );
-	return $page ? get_permalink( $page ) : home_url( '/' . $path . '/' );
+	return kg_page_url( $path );
 }
 
 /** Shared FAQ. Pages pick items by 1-based number. */

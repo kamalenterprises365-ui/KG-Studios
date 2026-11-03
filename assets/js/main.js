@@ -50,54 +50,8 @@
 		reveals.forEach((el) => el.classList.add('is-in'));
 	}
 
-	/* Count-up numbers */
-	$$('[data-count]').forEach((el) => {
-		if (reduce || !('IntersectionObserver' in window)) return;
-		const end = parseFloat(el.dataset.count);
-		const pre = el.dataset.prefix || '', suf = el.dataset.suffix || '';
-		const io = new IntersectionObserver(([en]) => {
-			if (!en.isIntersecting) return;
-			io.disconnect();
-			const t0 = performance.now(), dur = 1400;
-			const tick = (t) => {
-				const p = Math.min((t - t0) / dur, 1);
-				el.textContent = pre + Math.round(end * (1 - Math.pow(1 - p, 3))) + suf;
-				if (p < 1) requestAnimationFrame(tick);
-			};
-			requestAnimationFrame(tick);
-		}, { threshold: 0.6 });
-		io.observe(el);
-	});
-
-	/* Parallax orbs */
-	const orbs = $$('[data-parallax]');
-	if (orbs.length && !reduce) {
-		let pTick = false;
-		addEventListener('scroll', () => {
-			if (pTick) return;
-			pTick = true;
-			requestAnimationFrame(() => {
-				orbs.forEach((o) => { o.style.transform = `translate3d(0, ${scrollY * parseFloat(o.dataset.parallax)}px, 0)`; });
-				pTick = false;
-			});
-		}, { passive: true });
-	}
-
-	/* 3D tilt + magnetic buttons (pointer devices only) */
+	/* Magnetic buttons (pointer devices only) */
 	if (fine && !reduce) {
-		$$('.tilt').forEach((el) => {
-			el.addEventListener('pointermove', (e) => {
-				const r = el.getBoundingClientRect();
-				const x = (e.clientX - r.left) / r.width - 0.5;
-				const y = (e.clientY - r.top) / r.height - 0.5;
-				el.style.transition = 'transform .08s linear, border-color .3s, box-shadow .4s';
-				el.style.transform = `perspective(900px) rotateX(${(-y * 6).toFixed(2)}deg) rotateY(${(x * 8).toFixed(2)}deg) translateY(-4px)`;
-			});
-			el.addEventListener('pointerleave', () => {
-				el.style.transition = 'transform .6s cubic-bezier(.2,.7,.2,1), border-color .3s, box-shadow .4s';
-				el.style.transform = '';
-			});
-		});
 		$$('.magnet').forEach((el) => {
 			el.addEventListener('pointermove', (e) => {
 				const r = el.getBoundingClientRect();
@@ -107,7 +61,7 @@
 		});
 	}
 
-	/* Hero rotating audience line + image stack */
+	/* Hero rotating audience line */
 	const cycle = (nodes, ms) => {
 		if (nodes.length < 2 || reduce) return;
 		let i = 0;

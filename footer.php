@@ -52,8 +52,8 @@ $wa = preg_replace( '/\D/', '', (string) kg_opt( 'whatsapp' ) );
 	<div class="site-footer__bar">
 		<p>&copy; <?php echo esc_html( gmdate( 'Y' ) ); ?> KG Studios. All rights reserved.</p>
 		<ul class="legal">
-			<?php foreach ( $legal as $slug => $label ) : $page = get_page_by_path( $slug ); if ( $page ) : ?>
-				<li><a href="<?php echo esc_url( get_permalink( $page ) ); ?>"><?php echo esc_html( $label ); ?></a></li>
+			<?php foreach ( $legal as $slug => $label ) : if ( kg_page_exists( $slug ) ) : ?>
+				<li><a href="<?php echo esc_url( kg_page_url( $slug ) ); ?>"><?php echo esc_html( $label ); ?></a></li>
 			<?php endif; endforeach; ?>
 			<li><button type="button" class="linklike" data-consent-open><?php esc_html_e( 'Cookie settings', 'kgstudios' ); ?></button></li>
 			<li><button type="button" class="linklike" data-motion-toggle aria-pressed="false"><?php esc_html_e( 'Reduce motion', 'kgstudios' ); ?></button></li>

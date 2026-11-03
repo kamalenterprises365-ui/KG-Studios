@@ -47,6 +47,11 @@ function kg_process_lead( array $in, $ip ) {
 	if ( get_transient( $key ) ) {
 		return 'wait';
 	}
+	// Whatever the IP (the Cloudflare header can be forged when the site is reached directly), cap total enquiries per hour.
+	$cap_key = 'kg_lead_h_' . gmdate( 'YmdH' );
+	if ( (int) get_transient( $cap_key ) >= (int) apply_filters( 'kg_lead_hourly_cap', 20 ) ) {
+		return 'wait';
+	}
 
 	$f = function ( $name, $multiline = false ) use ( $in ) {
 		$v = isset( $in[ $name ] ) ? $in[ $name ] : '';
@@ -83,6 +88,7 @@ function kg_process_lead( array $in, $ip ) {
 		return 'error';
 	}
 	set_transient( $key, 1, 60 );
+	set_transient( $cap_key, (int) get_transient( $cap_key ) + 1, HOUR_IN_SECONDS );
 	return 'ok';
 }
 

@@ -18,7 +18,7 @@ $aud = kg_content( 'audiences' );
 			<?php endforeach; ?>
 		</div>
 	</div>
-	<h1 class="hero__name" data-lens>
+	<h1 class="hero__name" data-lens style="--mosaic:url('<?php echo kg_img( 'hero-mosaic.webp' ); ?>')">
 		<span class="hero__ink">KG Studios</span><span class="sr-only"> – <?php esc_html_e( 'Presentation and brand design agency in Gurgaon, India', 'kgstudios' ); ?></span>
 		<span class="hero__lens" aria-hidden="true">KG Studios</span>
 	</h1>

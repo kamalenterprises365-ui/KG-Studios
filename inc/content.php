@@ -15,27 +15,7 @@ function kg_content( $key ) {
 				'Presentations & Brand Design for Corporate & Enterprise Teams',
 				'Proposal Decks & Executive Presentations for Consulting Firms',
 			),
-			'hero_images' => array( 'hero-1.jpg', 'hero-2.jpg', 'hero-3.jpg' ),
 			'clients' => array( 'chill', 'ei', 'gen', 'ic', 'indi-closet', 'midlife-baithak', 'ot', 'vis', 'vo' ),
-			'presentations' => array(
-				array( 'Pitch & Investor decks', 'Investor-ready pitch deck design to help startups raise funding faster.', 'svc-1.jpg' ),
-				array( 'Sales & Marketing decks', 'High-conversion sales presentation design for enterprise deal closure.', 'svc-2.jpg' ),
-				array( 'Event & conference keynotes', 'Professional presentation design for Corporate events and webinars.', 'svc-3.jpg' ),
-				array( 'Proposal & consulting decks', 'Executive SteerCo deck design for leadership updates and decisions.', 'svc-4.jpg' ),
-				array( 'Annual & ESG reports', 'Create modern and copilot compatible PowerPoint templates', 'svc-5.jpg' ),
-				array( 'Presentation Template Creation', 'Custom Template system – scalable, on-brand, and AI-Copilot compatible', 'svc-6.jpg' ),
-			),
-			'extras' => array( 'Outsource presentation design service', 'DAM and Web add–ins', 'Presentation Design training' ),
-			'brand' => array(
-				'title' => 'Brand Identity',
-				'text'  => 'We craft distinctive brand identities for startups and growing businesses – from new launches to brand refresh initiatives – helping brands stand out with clarity and consistency.',
-				'list'  => array( 'Logo & visual identity systems', 'Brand guidelines & toolkits', 'Employer Branding', 'Marketing collaterals', 'Packaging design' ),
-			),
-			'digital' => array(
-				'title' => 'Digital Design',
-				'text'  => 'We bring brands to life through engaging digital experiences. From high-performing websites and landing pages to social media and campaign creatives, we design intuitive, conversion-focused solutions that drive impact across platforms.',
-				'list'  => array( 'Website design (UX/UI)', 'Landing pages & campaign microsites', 'Social media creatives & management', 'Digital campaign creatives & website interactives' ),
-			),
 			'why' => array(
 				array( 'Consulting DNA, Design Excellence', 'Led by alumni from BCG, KPMG, and ZS – we bring 30+ years of consulting experience and strategic thinking that goes far beyond design.' ),
 				array( 'Motion-Led Storytelling', 'We go beyond static slides – using motion and narrative flow to guide executive attention and drive message retention in high-stakes rooms.' ),

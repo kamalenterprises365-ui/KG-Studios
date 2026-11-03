@@ -18,12 +18,18 @@ function kg_install() {
 	$all   = kg_pages();
 	$ids   = array();
 	$paths = array();
+	// Slugs already created once. A page the owner later deletes is not brought back by a theme update.
+	$seen = (array) get_option( 'kg_pages_seen', array() );
 
 	foreach ( $all as $slug => $p ) {
 		$paths[ $slug ] = $p['parent'] ? $paths[ $p['parent'] ] . '/' . $slug : $slug;
 		$existing       = get_page_by_path( $paths[ $slug ] );
 		if ( $existing ) {
 			$ids[ $slug ] = $existing->ID;
+			$seen[]       = $slug;
+			continue;
+		}
+		if ( in_array( $slug, $seen, true ) ) {
 			continue;
 		}
 		$id = wp_insert_post( array(
@@ -35,8 +41,10 @@ function kg_install() {
 		) );
 		if ( $id && ! is_wp_error( $id ) ) {
 			$ids[ $slug ] = $id;
+			$seen[]       = $slug;
 		}
 	}
+	update_option( 'kg_pages_seen', array_values( array_unique( $seen ) ), false );
 
 	kg_install_menu( 'primary', 'KG Primary', kg_menu_tree( 'primary' ), $ids );
 	kg_install_menu( 'footer', 'KG Footer', kg_menu_tree( 'footer' ), $ids );

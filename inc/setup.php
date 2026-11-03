@@ -96,10 +96,25 @@ function kg_opt( $key ) {
 	return get_theme_mod( 'kg_' . $key, $d[ $key ] ?? '' );
 }
 
-/** Page URL by path or slug (e.g. "contact" or "contact/thank-you"), falling back to a URL that resolves once the page exists. */
+/** All published pages, path => permalink, loaded once per request (one query instead of one per link). */
+function kg_page_map() {
+	static $map = null;
+	if ( null === $map ) {
+		$map = array();
+		foreach ( get_pages() as $page ) {
+			$map[ get_page_uri( $page ) ] = get_permalink( $page );
+		}
+	}
+	return $map;
+}
+
+function kg_page_exists( $path ) {
+	return isset( kg_page_map()[ $path ] );
+}
+
+/** Page URL by path (e.g. "contact" or "contact/thank-you"), falling back to a URL that resolves once the page exists. */
 function kg_page_url( $path ) {
-	$page = get_page_by_path( $path );
-	return $page ? get_permalink( $page ) : home_url( '/' . $path . '/' );
+	return kg_page_map()[ $path ] ?? home_url( '/' . $path . '/' );
 }
 
 /** Primary nav fallback when no menu is assigned. Mirrors the menu the installer builds. */

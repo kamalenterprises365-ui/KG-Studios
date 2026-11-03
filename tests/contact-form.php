@@ -31,8 +31,20 @@ $check( 'second lead from same IP waits', kg_process_lead( $good, $ip ), 'wait' 
 $leads = get_posts( array( 'post_type' => 'kg_lead', 'post_status' => 'private', 'title' => 'Test User', 'numberposts' => -1 ) );
 $check( 'valid lead was stored once', count( $leads ), 1 );
 
-foreach ( $leads as $p ) {
+// Hourly cap: with a different (forged) IP every time, enquiries stop after the cap.
+$cap = (int) apply_filters( 'kg_lead_hourly_cap', 20 );
+$last = '';
+for ( $i = 0; $i <= $cap; $i++ ) {
+	$last = kg_process_lead( $good, '198.51.100.' . $i );
+}
+$check( 'enquiry beyond the hourly cap waits', $last, 'wait' );
+
+foreach ( get_posts( array( 'post_type' => 'kg_lead', 'post_status' => 'private', 'title' => 'Test User', 'numberposts' => -1 ) ) as $p ) {
 	wp_delete_post( $p->ID, true );
 }
 delete_transient( 'kg_lead_' . md5( $ip ) );
+for ( $i = 0; $i <= $cap; $i++ ) {
+	delete_transient( 'kg_lead_' . md5( '198.51.100.' . $i ) );
+}
+delete_transient( 'kg_lead_h_' . gmdate( 'YmdH' ) );
 exit( $fail ? 1 : 0 );

@@ -247,7 +247,11 @@ function kg_hello_world_id() {
 
 /** Pages that must stay out of every sitemap and out of the index. */
 function kg_noindex_ids() {
-	return array_values( array_filter( array( kg_thankyou_id(), kg_hello_world_id() ) ) );
+	static $ids = null;
+	if ( null === $ids ) {
+		$ids = array_values( array_filter( array( kg_thankyou_id(), kg_hello_world_id() ) ) );
+	}
+	return $ids;
 }
 
 add_filter( 'wp_robots', function ( $robots ) {

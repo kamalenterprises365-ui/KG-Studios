@@ -39,5 +39,21 @@ foreach ( $all as $slug => $p ) {
 	}
 }
 
+// Every page needs a search title of 62 characters or less, and a description of 156 or less.
+$seo = kg_seo_table();
+foreach ( $all as $slug => $p ) {
+	if ( 'thank-you' === $slug ) {
+		continue;
+	}
+	if ( empty( $seo[ $slug ][0] ) ) {
+		$bad( "$slug: no SEO title in kg_seo_table()" );
+	} elseif ( strlen( $seo[ $slug ][0] ) > 62 ) {
+		$bad( "$slug: SEO title is " . strlen( $seo[ $slug ][0] ) . ' characters' );
+	}
+	if ( ! empty( $seo[ $slug ][1] ) && strlen( $seo[ $slug ][1] ) > 156 ) {
+		$bad( "$slug: SEO description is " . strlen( $seo[ $slug ][1] ) . ' characters' );
+	}
+}
+
 echo $fail ? "$fail problem(s)\n" : 'PASS ' . count( $all ) . " pages\n";
 exit( $fail ? 1 : 0 );

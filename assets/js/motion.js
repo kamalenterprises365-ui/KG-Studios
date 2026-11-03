@@ -16,8 +16,10 @@
 	if (name && !reduce) {
 		name.classList.add('is-lens');
 		const hero = name.closest('[data-hero]');
-		let px = 0, py = 0, tx = 0, ty = 0, pr = 0, tr = 0, pointing = false, last = 0;
+		let px = 0, py = 0, tx = 0, ty = 0, pr = 0, tr = 0, pointing = false, last = 0, lensX = 0, lensY = 0;
+		let running = false, onScreen = true;
 		const frame = (t) => {
+			if (!onScreen) { running = false; return; }   // hero scrolled away: stop drawing until it returns
 			const r = name.getBoundingClientRect();
 			if (pointing) {
 				tx = lensX - r.left; ty = lensY - r.top; tr = r.height * 0.75;
@@ -30,14 +32,19 @@
 			name.style.setProperty('--r', pr.toFixed(1) + 'px');
 			requestAnimationFrame(frame);
 		};
-		let lensX = 0, lensY = 0;
+		const start = () => { if (!running) { running = true; requestAnimationFrame(frame); } };
 		hero.addEventListener('pointermove', (e) => {
 			const b = hero.getBoundingClientRect();
 			name.style.setProperty('--ty', (((e.clientX - b.left) / b.width - 0.5) * 6).toFixed(2) + 'deg');
 			name.style.setProperty('--tx', (((e.clientY - b.top) / b.height - 0.5) * -4).toFixed(2) + 'deg');
-			lensX = e.clientX; lensY = e.clientY; pointing = true; clearTimeout(last); last = setTimeout(() => { pointing = false; }, 2500); });
+			lensX = e.clientX; lensY = e.clientY; pointing = true;
+			clearTimeout(last); last = setTimeout(() => { pointing = false; }, 2500);
+		});
 		hero.addEventListener('pointerleave', () => { pointing = false; name.style.removeProperty('--tx'); name.style.removeProperty('--ty'); });
-		requestAnimationFrame(frame);
+		if ('IntersectionObserver' in window) {
+			new IntersectionObserver(([en]) => { onScreen = en.isIntersecting; if (onScreen) start(); }).observe(hero);
+		}
+		start();
 	}
 
 	/* Scroll scene: slides drift in 3D, then snap into place. Drives --p from 0 to 1. */
