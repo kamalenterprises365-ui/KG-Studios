@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'KG_VERSION', '2.0.0' );
+define( 'KG_VERSION', '2.1.0' );
 
 $kg_inc = get_template_directory() . '/inc/';
 require_once $kg_inc . 'pages-data.php';

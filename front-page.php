@@ -7,37 +7,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 get_header();
-$aud   = kg_content( 'audiences' );
-$cards = array( 2, 4, 6, 8, 10 ); // "after" slides, front card first.
+$aud = kg_content( 'audiences' );
 ?>
-<section class="hero f-gold">
-	<div class="hero__grid">
-		<div class="hero__text">
-			<h1 data-reveal="up"><span>KG</span><span>Studios</span></h1>
-			<p class="statement" data-reveal="up" style="--d:.05s"><?php esc_html_e( 'Presentation & Brand Design Agency for Founders, Corporates & Consulting Firms – Indian & Middle East', 'kgstudios' ); ?></p>
-			<div class="rotator" data-rotator data-reveal="up" style="--d:.1s">
-				<?php foreach ( $aud as $i => $line ) : ?>
-					<span class="<?php echo 0 === $i ? 'is-on' : ''; ?>"<?php echo 0 === $i ? '' : ' aria-hidden="true"'; ?>><?php echo esc_html( $line ); ?></span>
-				<?php endforeach; ?>
-			</div>
-			<div class="hero__actions" data-reveal="up" style="--d:.15s">
-				<a class="btn magnet" href="<?php echo esc_url( kg_page_url( 'contact' ) ); ?>"><?php esc_html_e( 'Get a quote', 'kgstudios' ); ?></a>
-				<a class="btn btn--ghost" href="<?php echo esc_url( kg_page_url( 'work' ) ); ?>"><?php esc_html_e( 'See our work', 'kgstudios' ); ?></a>
-			</div>
+<section class="hero f-gold" data-hero>
+	<div class="hero__top">
+		<p class="statement" data-reveal="up"><?php esc_html_e( 'Presentation & Brand Design Agency for Founders, Corporates & Consulting Firms – Indian & Middle East', 'kgstudios' ); ?></p>
+		<div class="rotator" data-rotator data-reveal="up" style="--d:.08s">
+			<?php foreach ( $aud as $i => $line ) : ?>
+				<span class="<?php echo 0 === $i ? 'is-on' : ''; ?>"<?php echo 0 === $i ? '' : ' aria-hidden="true"'; ?>><?php echo esc_html( $line ); ?></span>
+			<?php endforeach; ?>
 		</div>
-		<div class="hero__visual" data-reveal="right">
-			<div class="deck3d" data-deck3d aria-hidden="true">
-				<div class="deck3d__float">
-					<div class="deck3d__inner">
-						<?php foreach ( $cards as $i => $n ) : ?>
-							<figure class="deck3d__card" style="--i:<?php echo (int) $i; ?>">
-								<img src="<?php echo kg_img( 'slide-' . $n . '.jpeg' ); ?>" alt="" width="800" height="450" <?php echo 0 === $i ? 'fetchpriority="high"' : 'loading="lazy"'; ?>>
-							</figure>
-						<?php endforeach; ?>
-					</div>
-				</div>
-			</div>
-		</div>
+	</div>
+	<h1 class="hero__name" data-lens>
+		<span class="hero__ink">KG Studios</span>
+		<span class="hero__lens" aria-hidden="true">KG Studios</span>
+	</h1>
+	<div class="hero__actions">
+		<a class="btn magnet" href="<?php echo esc_url( kg_page_url( 'contact' ) ); ?>"><?php esc_html_e( 'Get a quote', 'kgstudios' ); ?></a>
+		<a class="btn btn--ghost" href="<?php echo esc_url( kg_page_url( 'work' ) ); ?>"><?php esc_html_e( 'See our work', 'kgstudios' ); ?></a>
 	</div>
 </section>
 

@@ -11,21 +11,29 @@
 	const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
 	const raf = (fn) => { let t = false; return () => { if (!t) { t = true; requestAnimationFrame(() => { t = false; fn(); }); } }; };
 
-	/* Hero 3D deck follows the pointer */
-	const deck = $('[data-deck3d]');
-	if (deck && fine && !reduce) {
-		const hero = deck.closest('.hero');
-		hero.addEventListener('pointermove', (e) => {
-			const r = hero.getBoundingClientRect();
-			const x = (e.clientX - r.left) / r.width - 0.5;
-			const y = (e.clientY - r.top) / r.height - 0.5;
-			deck.style.setProperty('--ry', (-16 + x * 14).toFixed(1) + 'deg');
-			deck.style.setProperty('--rx', (8 - y * 12).toFixed(1) + 'deg');
-		});
-		hero.addEventListener('pointerleave', () => {
-			deck.style.removeProperty('--ry');
-			deck.style.removeProperty('--rx');
-		});
+	/* Hero lens: follows the pointer, drifts along the lettering when nobody is pointing */
+	const name = $('[data-lens]');
+	if (name && !reduce) {
+		name.classList.add('is-lens');
+		const hero = name.closest('[data-hero]');
+		let px = 0, py = 0, tx = 0, ty = 0, pr = 0, tr = 0, pointing = false, last = 0;
+		const frame = (t) => {
+			const r = name.getBoundingClientRect();
+			if (pointing) {
+				tx = lensX - r.left; ty = lensY - r.top; tr = r.height * 0.75;
+			} else {
+				tx = r.width * (0.5 + 0.4 * Math.sin(t / 2600)); ty = r.height * (0.5 + 0.22 * Math.sin(t / 1700)); tr = r.height * 0.6;
+			}
+			px += (tx - px) * 0.12; py += (ty - py) * 0.12; pr += (tr - pr) * 0.1;
+			name.style.setProperty('--mx', px.toFixed(1) + 'px');
+			name.style.setProperty('--my', py.toFixed(1) + 'px');
+			name.style.setProperty('--r', pr.toFixed(1) + 'px');
+			requestAnimationFrame(frame);
+		};
+		let lensX = 0, lensY = 0;
+		hero.addEventListener('pointermove', (e) => { lensX = e.clientX; lensY = e.clientY; pointing = true; clearTimeout(last); last = setTimeout(() => { pointing = false; }, 2500); });
+		hero.addEventListener('pointerleave', () => { pointing = false; });
+		requestAnimationFrame(frame);
 	}
 
 	/* Scroll scene: slides drift in 3D, then snap into place. Drives --p from 0 to 1. */

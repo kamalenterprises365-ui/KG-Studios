@@ -28,14 +28,6 @@
 @keyframes vtOut { to { opacity: 0; transform: translateY(-12px); } }
 @keyframes vtIn { from { opacity: 0; transform: translateY(16px); } }
 
-/* Hero 3D deck: five real slides stacked in depth, following the pointer */
-.deck3d { position: relative; perspective: 1400px; aspect-ratio: 16 / 12; --rx: 8deg; --ry: -16deg; }
-.deck3d__float { position: absolute; inset: 12% 30% 8% 0; animation: bob 7s ease-in-out infinite; }
-.deck3d__inner { position: absolute; inset: 0; transform-style: preserve-3d; transform: rotateX(var(--rx)) rotateY(var(--ry)); transition: transform .3s ease-out; }
-.deck3d__card { position: absolute; inset: 0; margin: 0; background: var(--paper); transform: translate3d(calc(var(--i) * 18px), calc(var(--i) * -18px), calc(var(--i) * -60px)); }
-.deck3d__card img { width: 100%; height: 100%; object-fit: cover; filter: brightness(calc(1 - var(--i) * .12)); }
-@keyframes bob { 50% { transform: translateY(-10px); } }
-
 /* Scroll scene: chaos to clarity. motion.js sets --p on .scene. */
 .scene { position: relative; height: 240vh; --p: 0; }
 .scene__stick { position: sticky; top: 0; height: 100svh; display: flex; flex-direction: column; justify-content: center; gap: 2.5rem; padding: 4rem var(--m) 1rem; overflow: hidden; }
@@ -99,7 +91,6 @@
 
 @media (max-width: 980px) {
 	.game { grid-template-columns: 1fr; }
-	.deck3d__float { inset: 8% 18% 6% 0; }
 }
 @media (max-width: 640px) { .consent { bottom: .6rem; } }
 
