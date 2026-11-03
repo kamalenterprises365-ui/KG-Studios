@@ -80,3 +80,18 @@ function kg_fallback_menu() {
 /** Remove emoji scripts; unused and render-blocking-adjacent. */
 remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
 remove_action( 'wp_print_styles', 'print_emoji_styles' );
+
+/** Google Search Console verification and Google Analytics (GA4). */
+add_action( 'wp_head', function () {
+	?>
+<meta name="google-site-verification" content="QHZ9znF5DCohfZ1H8brp3DRdLwUf997io-PMHkVecps" />
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2NFZYHHWKH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2NFZYHHWKH');
+</script>
+	<?php
+}, 1 );
