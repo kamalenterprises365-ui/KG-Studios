@@ -14,7 +14,7 @@ $pillars = array( 'presentation-design', 'brand-identity', 'digital-design' );
 <section class="section f-teal" id="what_we_do">
 	<div class="wrap">
 		<h2 data-reveal="up"><?php esc_html_e( 'Presentation Services', 'kgstudios' ); ?></h2>
-		<p class="statement" data-reveal="up" style="--d:.06s"><?php esc_html_e( 'Where ideas rise, flow, dive, and shine – through powerful presentations.', 'kgstudios' ); ?></p>
+		<p class="statement" data-reveal="up" style="--d:.06s"><?php esc_html_e( 'Where ideas rise, flow, dive, and shine, through powerful presentations.', 'kgstudios' ); ?></p>
 
 		<div class="idx" data-index data-reveal="up">
 			<ul class="idx__list">

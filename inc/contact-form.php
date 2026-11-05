@@ -167,7 +167,7 @@ function kg_lead_form( $id = 'lead' ) {
 				<label class="field"><span><?php esc_html_e( 'Company / Role', 'kgstudios' ); ?></span><input type="text" name="kg_company" autocomplete="organization"></label>
 			</div>
 			<label class="field"><span><?php esc_html_e( 'Tell us about your project', 'kgstudios' ); ?></span><textarea name="kg_message" rows="4"><?php echo esc_textarea( $prefill ); ?></textarea></label>
-			<label class="field"><span><?php esc_html_e( 'Link to your files (Drive, Dropbox, WeTransfer) – optional', 'kgstudios' ); ?></span><input type="url" name="kg_link" placeholder="https://" autocomplete="off"></label>
+			<label class="field"><span><?php esc_html_e( 'Link to your files (Drive, Dropbox, WeTransfer), optional', 'kgstudios' ); ?></span><input type="url" name="kg_link" placeholder="https://" autocomplete="off"></label>
 			<div class="lead__nav">
 				<button type="button" class="btn btn--ghost" data-prev><?php esc_html_e( 'Back', 'kgstudios' ); ?></button>
 				<button type="submit" class="btn"><?php esc_html_e( "Let's Talk", 'kgstudios' ); ?></button>

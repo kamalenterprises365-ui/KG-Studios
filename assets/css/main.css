@@ -25,16 +25,20 @@
 
 	/* The "Fix this slide" fragment is a real interface (data-ui) with its own light slide palette. */
 	--slide-ground: #f5f6f3; --slide-card: #fdfdfc; --slide-ink: #14161c; --slide-line: #cfd2da; --slide-text: #2a2d36; --slide-soft: #ecebe4; --slide-teal: #7fcfc9;
+	--soft-ink: #c9ccd3; 
+	--soft-paper: #3a3d46; --tile-paper: #e2e3dd;
+	--soft-gold: #2c2616; --tile-gold: #e6bb62;
+	--soft-teal: #052624; --tile-teal: #19b6ae;
 	--shadow: 0 24px 36px -14px color-mix(in srgb, var(--ink) 50%, transparent);
 
 	/* Default field is ink. */
-	--bg: var(--ink); --fg: var(--paper); --soft: #c9ccd3; --tile: var(--ink2); --accent: var(--gold); --on: var(--ink);
+	--bg: var(--ink); --fg: var(--paper); --soft: var(--soft-ink); --tile: var(--ink2); --accent: var(--gold); --on: var(--ink);
 }
 
-.f-ink   { --bg: var(--ink);   --fg: var(--paper); --soft: #c9ccd3; --tile: var(--ink2); --accent: var(--gold); --on: var(--ink); }
-.f-paper { --bg: var(--paper); --fg: var(--ink);   --soft: #3a3d46; --tile: #e2e3dd;     --accent: var(--ink);  --on: var(--paper); }
-.f-gold  { --bg: var(--gold);  --fg: var(--ink);   --soft: #2c2616; --tile: #e6bb62;     --accent: var(--ink);  --on: var(--paper); }
-.f-teal  { --bg: var(--teal);  --fg: var(--ink);   --soft: #052624; --tile: #19b6ae;     --accent: var(--ink);  --on: var(--paper); }
+.f-ink   { --bg: var(--ink);   --fg: var(--paper); --soft: var(--soft-ink); --tile: var(--ink2); --accent: var(--gold); --on: var(--ink); }
+.f-paper { --bg: var(--paper); --fg: var(--ink);   --soft: var(--soft-paper); --tile: var(--tile-paper);     --accent: var(--ink);  --on: var(--paper); }
+.f-gold  { --bg: var(--gold);  --fg: var(--ink);   --soft: var(--soft-gold); --tile: var(--tile-gold);     --accent: var(--ink);  --on: var(--paper); }
+.f-teal  { --bg: var(--teal);  --fg: var(--ink);   --soft: var(--soft-teal); --tile: var(--tile-teal);     --accent: var(--ink);  --on: var(--paper); }
 .f-ink, .f-paper, .f-gold, .f-teal { background: var(--bg); color: var(--fg); }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -75,6 +79,9 @@ em { font-style: normal; }
 .btn:hover { transform: translateY(-3px); }
 .btn:active { transform: translateY(0) scale(.98); }
 .btn--ghost { background: var(--tile); color: var(--fg); }
+.btn:disabled, .btn[aria-disabled="true"] { background: var(--tile); color: var(--soft); cursor: not-allowed; transform: none; }
+.hero__link { padding: .8rem 0; font: 600 var(--s-body)/1 var(--body); text-decoration: underline; text-underline-offset: .3em; }
+.hero__link:hover { text-decoration-thickness: 3px; }
 
 /* Header: plain bar, no blur. It takes the ink of the chapter beneath it (motion.js sets data-ink). */
 .site-header { position: fixed; inset: 0 0 auto; z-index: 100; color: var(--ink); transition: color .3s, transform .4s var(--ease); }
@@ -109,7 +116,7 @@ em { font-style: normal; }
 .hero { position: relative; min-height: min(100svh, 54rem); padding: 6.5rem var(--m) 1.6rem; display: flex; flex-direction: column; justify-content: space-between; gap: 2rem; overflow: hidden; }
 .hero__top { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 2rem 4rem; align-items: start; }
 .hero .statement { max-width: 24em; margin: 0; }
-.hero__actions { display: flex; flex-wrap: wrap; gap: .8rem; }
+.hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1.6rem; }
 .hero__name { display: grid; margin: 0; font: 700 var(--s-display)/.8 var(--display); letter-spacing: -.05em; white-space: nowrap; max-width: none; text-align: left; margin-left: -.04em; }
 .hero__name { transform: perspective(1200px) rotateX(var(--tx, 0deg)) rotateY(var(--ty, 0deg)); transition: transform .4s var(--ease); transform-origin: 50% 100%; }
 .hero__ink, .hero__lens { grid-area: 1 / 1; }
@@ -191,7 +198,7 @@ em { font-style: normal; }
 .case-ba { max-width: 64rem; margin: 0 0 3rem; }
 
 /* Process bar */
-.bar { display: flex; gap: 6px; margin-top: 2.5rem; }
+.bar { display: flex; gap: 8px; margin-top: 2.5rem; }
 .bar__seg { flex: 1 1 0; min-width: 0; }
 .bar__block { display: flex; align-items: flex-start; min-height: 11rem; padding: 1.2rem; font: 700 var(--s-lead)/1 var(--display); letter-spacing: -.03em; color: var(--ink); }
 .bar__block--gold { background: var(--gold); } .bar__block--teal { background: var(--teal); } .bar__block--paper { background: var(--paper); }
@@ -236,9 +243,9 @@ em { font-style: normal; }
 .contact-list a { font: 700 var(--s-lead)/1.1 var(--display); letter-spacing: -.03em; }
 .contact-list a:hover { text-decoration: underline; text-underline-offset: .15em; }
 .cta__quick { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2rem; }
-.cta__form { background: var(--tile); padding: clamp(1.4rem, 3vw, 2.5rem); }
+.cta__form { background: var(--tile); color: var(--fg); padding: clamp(1.4rem, 3vw, 2.5rem); }
 .lead__hp { position: absolute; left: -9999px; }
-.lead__progress { display: flex; gap: 6px; margin-bottom: 1.6rem; }
+.lead__progress { display: flex; gap: 4px; margin-bottom: 1.6rem; }
 .lead__progress i { flex: 1; height: .4rem; background: var(--bg); opacity: .5; transition: opacity .4s; }
 .lead__progress i.is-done { opacity: 1; background: var(--fg); }
 .lead__step { display: none; border: 0; padding: 0; margin: 0; min-width: 0; }
@@ -309,7 +316,7 @@ em { font-style: normal; }
 
 @media (max-width: 980px) {
 	.hero { min-height: 0; padding-top: 6.5rem; }
-	.hero__top, .split, .cta__grid, .split-head, .idx, .site-footer__grid, .rows li a { grid-template-columns: 1fr; }
+	.hero__top, .split, .cta__grid, .split-head, .idx, .site-footer__grid, .rows li a { grid-template-columns: minmax(0, 1fr); }
 	.split-head__h, .idx__stage { position: static; }
 	.rows li a { gap: .4rem; }
 	.cards, .team { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -327,7 +334,7 @@ em { font-style: normal; }
 	.site-header.is-open { color: var(--paper); }
 }
 @media (max-width: 640px) {
-	.cards, .team, .ba-grid, .lead__grid, .site-footer__links { grid-template-columns: 1fr; }
+	.cards, .team, .ba-grid, .lead__grid, .site-footer__links { grid-template-columns: minmax(0, 1fr); }
 	.quote figcaption { flex-direction: column; }
 	.band { min-height: 46svh; }
 }

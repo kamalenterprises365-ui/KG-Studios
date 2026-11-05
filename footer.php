@@ -49,7 +49,7 @@ $wa = preg_replace( '/\D/', '', (string) kg_opt( 'whatsapp' ) );
 		</div>
 	</div>
 	<div class="site-footer__bar">
-		<p>&copy; <?php echo esc_html( gmdate( 'Y' ) ); ?> KG Studios. All rights reserved.</p>
+		<p>&copy; <?php echo esc_html( gmdate( 'Y' ) ); ?> KG Studios</p>
 		<ul class="legal">
 			<?php foreach ( $legal as $slug => $label ) : if ( kg_page_exists( $slug ) ) : ?>
 				<li><a href="<?php echo esc_url( kg_page_url( $slug ) ); ?>"><?php echo esc_html( $label ); ?></a></li>
