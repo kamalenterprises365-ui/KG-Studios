@@ -20,7 +20,7 @@ function kg_content( $key ) {
 				array( 'Consulting DNA, Design Excellence', 'Led by alumni from BCG, KPMG, and ZS – we bring 30+ years of consulting experience and strategic thinking that goes far beyond design.' ),
 				array( 'Motion-Led Storytelling', 'We go beyond static slides – using motion and narrative flow to guide executive attention and drive message retention in high-stakes rooms.' ),
 				array( 'AI-Powered Velocity', 'Proprietary AI workflows enable 30–50% faster execution – delivering exceptional quality at speeds that keep pace with your business.' ),
-				array( 'Multi-Platform Mastery', 'Native expertise across PowerPoint, Google Slides, Keynote, Canva, and Figma – seamlessly adapting to your tools and workflow.' ),
+				array( 'Multi-Platform Mastery', 'Native expertise across PowerPoint, Google Slides, Keynote, Canva, and Figma – adapting to your tools and workflow.' ),
 				array( 'Enterprise-Grade Confidentiality', 'Strict NDA-backed processes and secure workflows ensure your data, ideas, and strategies stay completely protected – always.' ),
 			),
 			'pairs' => array( 1, 3, 5, 7, 9, 11 ),

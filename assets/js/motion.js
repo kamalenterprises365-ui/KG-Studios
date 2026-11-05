@@ -117,21 +117,21 @@
 		});
 	});
 
-	/* Fix this slide */
+	/* Fix this slide: each block rests at its slot and is moved with transform only (--dx/--dy are % of the stage) */
 	$$('[data-game]').forEach((stage) => {
 		const blocks = $$('.blk', stage);
 		const counter = $('[data-game-count]');
 		const win = $('[data-game-win]');
 		const solve = $('[data-game-solve]');
 		let done = 0;
-		const put = (b, l, t, rot) => {
-			b.style.left = l + '%';
-			b.style.top = t + '%';
-			b.style.transform = `rotate(${rot}deg)`;
+		const put = (b, dx, dy, rot) => {
+			b.style.setProperty('--dx', dx.toFixed(2));
+			b.style.setProperty('--dy', dy.toFixed(2));
+			b.style.setProperty('--r', rot + 'deg');
 		};
 		const lock = (b) => {
 			if (b.classList.contains('is-set')) return;
-			put(b, +b.dataset.l, +b.dataset.t, 0);
+			put(b, 0, 0, 0);
 			b.classList.remove('is-drag');
 			b.classList.add('is-set');
 			done += 1;
@@ -139,32 +139,32 @@
 			if (win && done === blocks.length) win.hidden = false;
 		};
 		blocks.forEach((b) => {
-			b.style.width = b.dataset.w + '%';
-			b.style.height = b.dataset.h + '%';
-			put(b, +b.dataset.sl, +b.dataset.st, +b.dataset.sr);
-			let sx = 0, sy = 0, ol = 0, ot = 0, active = false;
+			const w = +b.dataset.w, h = +b.dataset.h, l = +b.dataset.l, t = +b.dataset.t;
+			b.style.width = w + '%'; b.style.height = h + '%'; b.style.left = l + '%'; b.style.top = t + '%';
+			put(b, +b.dataset.sl - l, +b.dataset.st - t, +b.dataset.sr);
+			let sx = 0, sy = 0, dx0 = 0, dy0 = 0, active = false;
 			b.addEventListener('pointerdown', (e) => {
 				if (b.classList.contains('is-set')) return;
 				active = true;
 				b.setPointerCapture(e.pointerId);
 				b.classList.add('is-drag');
 				sx = e.clientX; sy = e.clientY;
-				ol = parseFloat(b.style.left); ot = parseFloat(b.style.top);
-				b.style.transform = 'rotate(0deg)';
+				dx0 = parseFloat(b.style.getPropertyValue('--dx')); dy0 = parseFloat(b.style.getPropertyValue('--dy'));
+				b.style.setProperty('--r', '0deg');
 			});
 			b.addEventListener('pointermove', (e) => {
 				if (!active) return;
 				const r = stage.getBoundingClientRect();
-				const l = Math.min(Math.max(ol + (e.clientX - sx) / r.width * 100, 0), 100 - +b.dataset.w);
-				const t = Math.min(Math.max(ot + (e.clientY - sy) / r.height * 100, 0), 100 - +b.dataset.h);
-				b.style.left = l + '%';
-				b.style.top = t + '%';
+				const dx = Math.min(Math.max(dx0 + (e.clientX - sx) / r.width * 100, -l), 100 - w - l);
+				const dy = Math.min(Math.max(dy0 + (e.clientY - sy) / r.height * 100, -t), 100 - h - t);
+				b.style.setProperty('--dx', dx.toFixed(2));
+				b.style.setProperty('--dy', dy.toFixed(2));
 			});
 			const end = () => {
 				if (!active) return;
 				active = false;
 				b.classList.remove('is-drag');
-				if (Math.abs(parseFloat(b.style.left) - +b.dataset.l) < 6 && Math.abs(parseFloat(b.style.top) - +b.dataset.t) < 8) lock(b);
+				if (Math.abs(parseFloat(b.style.getPropertyValue('--dx'))) < 6 && Math.abs(parseFloat(b.style.getPropertyValue('--dy'))) < 8) lock(b);
 			};
 			b.addEventListener('pointerup', end);
 			b.addEventListener('pointercancel', end);

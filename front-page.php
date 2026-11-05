@@ -7,19 +7,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 get_header();
-$aud = kg_content( 'audiences' );
+$aud   = kg_content( 'audiences' );
+$slugs = array( 'startups-and-founders', 'corporate-and-enterprise-teams', 'consulting-firms' );
 ?>
 <section class="hero f-gold" data-hero>
 	<div class="hero__top">
 		<p class="statement" data-reveal="up"><?php esc_html_e( 'Presentation & Brand Design Agency for Founders, Corporates & Consulting Firms – Indian & Middle East', 'kgstudios' ); ?></p>
-		<div class="rotator" data-rotator data-reveal="up" style="--d:.08s">
-			<?php foreach ( $aud as $i => $line ) : ?>
-				<span class="<?php echo 0 === $i ? 'is-on' : ''; ?>"<?php echo 0 === $i ? '' : ' aria-hidden="true"'; ?>><?php echo esc_html( $line ); ?></span>
-			<?php endforeach; ?>
-		</div>
 	</div>
 	<h1 class="hero__name" data-lens style="--mosaic:url('<?php echo kg_img( 'hero-mosaic.webp' ); ?>')">
-		<span class="hero__ink">KG Studios</span><span class="sr-only"> – <?php esc_html_e( 'Presentation and brand design agency in Gurgaon, India', 'kgstudios' ); ?></span>
+		<span class="hero__ink">KG Studios</span><span class="sr-only"> – <?php esc_html_e( 'Presentation design agency in Gurgaon', 'kgstudios' ); ?></span>
 		<span class="hero__lens" aria-hidden="true">KG Studios</span>
 	</h1>
 	<div class="hero__actions">
@@ -35,6 +31,11 @@ get_template_part( 'template-parts/section', 'logos' );
 	<div class="wrap">
 		<h2 data-reveal="up"><?php esc_html_e( 'Win approvals. Secure funding. Drive growth.', 'kgstudios' ); ?></h2>
 		<p class="statement" data-reveal="up" style="--d:.08s"><?php esc_html_e( 'We turn complex ideas into persuasive presentations, powerful brands, and high-performing digital experiences – helping you win approvals, secure funding, and drive growth.', 'kgstudios' ); ?></p>
+		<ul class="aud" data-reveal="up" style="--d:.12s">
+			<?php foreach ( $aud as $i => $line ) : ?>
+				<li><a href="<?php echo esc_url( kg_slug_url( $slugs[ $i ] ) ); ?>" data-cursor="<?php esc_attr_e( 'Open', 'kgstudios' ); ?>"><?php echo esc_html( $line ); ?></a></li>
+			<?php endforeach; ?>
+		</ul>
 	</div>
 </section>
 <?php

@@ -15,8 +15,8 @@ $q = isset( $args['query'] ) ? $args['query'] : $GLOBALS['wp_query'];
 					<a class="card__img" href="<?php the_permalink(); ?>"><?php the_post_thumbnail( 'large', array( 'loading' => 'lazy' ) ); ?></a>
 				<?php endif; ?>
 				<div class="card__body">
-					<span class="card__meta"><?php echo esc_html( get_the_date() ); ?></span>
 					<h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+					<span class="card__meta"><?php echo esc_html( get_the_date() ); ?></span>
 					<p><?php echo esc_html( get_the_excerpt() ); ?></p>
 				</div>
 			</article>

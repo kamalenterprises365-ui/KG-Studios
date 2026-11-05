@@ -46,7 +46,6 @@ $wa = preg_replace( '/\D/', '', (string) kg_opt( 'whatsapp' ) );
 					<li><a href="<?php echo esc_url( kg_opt( $key ) ); ?>" target="_blank" rel="noopener"><?php echo esc_html( $label ); ?></a></li>
 				<?php endif; endforeach; ?>
 			</ul>
-			<p class="site-footer__about">KG Studios is a specialized presentation, brand, and digital design agency headquartered in Gurgaon, India. Led by alumni from BCG, KPMG, and ZS, we blend consulting strategy with world-class design to help startups, corporates, and consulting firms communicate with clarity, confidence, and measurable impact – across India and the Middle East.</p>
 		</div>
 	</div>
 	<div class="site-footer__bar">

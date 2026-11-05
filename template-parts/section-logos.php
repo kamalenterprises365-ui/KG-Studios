@@ -8,8 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 $a       = wp_parse_args( $args, array( 'field' => 'ink' ) );
 $clients = kg_content( 'clients' );
 ?>
-<section class="logos f-<?php echo esc_attr( $a['field'] ); ?>" aria-label="<?php esc_attr_e( 'Clients', 'kgstudios' ); ?>">
-	<p class="logos__title" data-reveal><?php esc_html_e( 'Trusted by ambitious brands across India & the Middle East', 'kgstudios' ); ?></p>
+<figure class="logos f-<?php echo esc_attr( $a['field'] ); ?>">
 	<div class="marquee">
 		<div class="marquee__track">
 			<?php for ( $r = 0; $r < 2; $r++ ) : foreach ( $clients as $c ) : ?>
@@ -17,4 +16,5 @@ $clients = kg_content( 'clients' );
 			<?php endforeach; endfor; ?>
 		</div>
 	</div>
-</section>
+	<figcaption class="logos__cap"><?php esc_html_e( 'Trusted by ambitious brands across India & the Middle East', 'kgstudios' ); ?></figcaption>
+</figure>

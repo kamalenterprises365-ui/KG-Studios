@@ -24,8 +24,8 @@ if ( ! $cases->have_posts() ) {
 						<div class="card__img"><img src="<?php echo esc_url( $img ); ?>" alt="" loading="lazy" width="800" height="450"></div>
 					<?php endif; ?>
 					<div class="card__body">
-						<span class="card__meta"><?php echo esc_html( get_post_meta( get_the_ID(), 'kg_service', true ) ); ?></span>
 						<h3><?php the_title(); ?></h3>
+						<span class="card__meta"><?php echo esc_html( get_post_meta( get_the_ID(), 'kg_service', true ) ); ?></span>
 						<p><?php echo esc_html( get_post_meta( get_the_ID(), 'kg_result', true ) ); ?></p>
 					</div>
 				</a>

@@ -61,19 +61,6 @@
 		});
 	}
 
-	/* Hero rotating audience line */
-	const cycle = (nodes, ms) => {
-		if (nodes.length < 2 || reduce) return;
-		let i = 0;
-		setInterval(() => {
-			nodes[i].classList.remove('is-on');
-			i = (i + 1) % nodes.length;
-			nodes[i].classList.add('is-on');
-		}, ms);
-	};
-	const rot = $('[data-rotator]');
-	if (rot) cycle($$('span', rot), 3600);
-
 	/* Before / after sliders */
 	$$('[data-ba]').forEach((fig) => {
 		const range = $('.ba__range', fig);
@@ -102,23 +89,19 @@
 	$$('[data-slider]').forEach((sl) => {
 		const track = $('.slider__track', sl);
 		const dots = $$('.slider__dots button', sl);
-		let i = 0, timer;
+		let i = 0;
 		const go = (n) => {
 			i = (n + dots.length) % dots.length;
 			track.style.transform = `translateX(${-i * 100}%)`;
 			dots.forEach((d, k) => d.setAttribute('aria-selected', String(k === i)));
 		};
-		const auto = () => { clearInterval(timer); if (!reduce) timer = setInterval(() => go(i + 1), 7000); };
-		dots.forEach((d, k) => d.addEventListener('click', () => { go(k); auto(); }));
+		dots.forEach((d, k) => d.addEventListener('click', () => go(k)));
 		let x0 = null;
 		sl.addEventListener('pointerdown', (e) => { x0 = e.clientX; });
 		sl.addEventListener('pointerup', (e) => {
-			if (x0 !== null && Math.abs(e.clientX - x0) > 40) { go(i + (e.clientX < x0 ? 1 : -1)); auto(); }
+			if (x0 !== null && Math.abs(e.clientX - x0) > 40) go(i + (e.clientX < x0 ? 1 : -1));
 			x0 = null;
 		});
-		sl.addEventListener('mouseenter', () => clearInterval(timer));
-		sl.addEventListener('mouseleave', auto);
-		auto();
 	});
 
 	/* Multi-step lead form */
