@@ -13,6 +13,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<div class="member__img"><img src="<?php echo kg_img( $m[3] ); ?>" alt="<?php echo esc_attr( $m[0] ); ?>" loading="lazy" width="600" height="600"></div>
 					<h3><?php echo esc_html( $m[0] ); ?></h3>
 					<p class="member__role"><?php echo esc_html( $m[1] ); ?></p>
+					<?php if ( ! empty( $m[4] ) ) : ?>
+						<p class="member__link"><?php esc_html_e( 'Owner of', 'kgstudios' ); ?> <a href="<?php echo esc_url( $m[4][1] ); ?>" target="_blank" rel="noopener"><?php echo esc_html( $m[4][0] ); ?></a></p>
+					<?php endif; ?>
 					<p class="soft"><?php echo esc_html( $m[2] ); ?></p>
 				</article>
 			<?php endforeach; ?>

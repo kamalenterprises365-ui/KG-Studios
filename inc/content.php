@@ -28,7 +28,7 @@ function kg_content( $key ) {
 				array( 'Kamal Ghanghas', 'Co-Founder & Creative Director', 'Ex-BCG, ZS & KPMG. 15+ years of experience', 'team-kamal.png' ),
 				array( 'Kavita Dahiya', 'Sr. presentation specialist', '15+ years of experience in design and strategy', 'team-kavita.png' ),
 				array( 'Aditya Malik', 'Presentation specialist', '5+ years of experience', 'team-aditya.png' ),
-				array( 'Sahil Sheoran', 'Marketing and automation specialist', '3+ years of experience', 'team-sahil.png' ),
+				array( 'Sahil Sheoran', 'Marketing and automation specialist', '3+ years of experience', 'team-sahil.png', array( 'ApexFlow Digital', 'https://apex-flow.online/' ) ),
 			),
 			'testimonials' => array(
 				array( 'Rahul M.', 'Co-Founder, Series A Fintech Startup, India', 'We had a strong story but needed it to come to life visually. KG Studios helped us build a brand identity and pitch deck that truly represented who we are. Investors noticed the difference immediately – we looked as credible as we felt.' ),

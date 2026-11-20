@@ -210,6 +210,9 @@ em { font-style: normal; }
 .member__img img { width: 100%; height: 100%; object-fit: cover; }
 .member h3 { margin-bottom: .2em; }
 .member__role { font-weight: 600; margin-bottom: .3em; }
+.member__link { margin-bottom: .3em; font-weight: 600; }
+.member__link a { text-decoration: underline; text-underline-offset: .2em; }
+.member__link a:hover { text-decoration-thickness: 3px; }
 .member .soft { margin: 0; font-size: var(--s-small); }
 
 /* Testimonials */
